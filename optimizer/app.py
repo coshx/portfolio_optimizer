@@ -10,18 +10,23 @@ from tornado.options import define, options, parse_command_line
 define("port", default=8000, help="run on the given port", type=int)
 define("debug", default=False, help="run in debug mode")
 
+
 class MainHandler(tornado.web.RequestHandler):
     """Handles post requests by responding with a JSON file."""
     @tornado.web.asynchronous
     def get(self):
+        """Respond to GET requests for debugging."""
         self.write("Success!")
         self.finish()
 
     @tornado.web.asynchronous
     def post(self):
+        """Respond to POST requests with optimal allocations."""
         data = json.loads(self.request.body.decode('utf-8'))
-        self.optimize_portfolio(data)
+        optimized = optimize_portfolio(data)
+        self.write(optimized)
         self.finish()
+
 
 def make_app():
     tornado.options.parse_command_line()
@@ -29,9 +34,11 @@ def make_app():
         (r"/", MainHandler),
     ])
 
-def optimize_portfolio(self, data):
+
+def optimize_portfolio(data):
     Info = {'key': 'value'}
-    self.write(json.dumps(data))
+    return json.dumps(data)
+
 
 def main():
     """Runs application on httpserver with handler for '/'."""
