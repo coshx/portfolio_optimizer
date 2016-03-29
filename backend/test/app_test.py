@@ -1,31 +1,30 @@
 import json
 
-from optimizer import app
+from backend import app
 
 from tornado.testing import AsyncHTTPTestCase, AsyncTestCase
 from tornado.httpclient import AsyncHTTPClient
 
 
 class HandleRequestsTestCase(AsyncHTTPTestCase):
-    """Tests response to get requests."""
     def get_app(self):
         return app.make_app()
 
     def test_handle_get_request(self):
-        """Smoke tests the application."""
+        """Tests response to get requests (smoke test)."""
         response = self.fetch('/')
         self.assertEqual(response.code, 200)
         self.assertEqual(response.body, b'Success!')
 
     def test_handle_post_request(self):
         """Tests ability to parse JSON."""
-        response = self.fetch('/',
-                              method="POST",
-                              body=json.dumps({"key1": "value1",
-                                               "key2": "value2"}))
+        params = {'symbols': ['AAPL', 'GOOG', 'FB'],
+                  'start_date': '01-01-12',
+                  'end_date': '03-20-16',
+                  'principle': 1000.00}
+        response = self.fetch('/', method="POST", body=json.dumps(params))
         self.assertEqual(response.code, 200)
 
         res_json = json.loads(response.body.decode('utf-8'))
         res_dict = dict(res_json)
-        expected = {"key1": "value1", "key2": "value2"}
-        self.assertEqual(res_dict, expected)
+        self.assertEqual(res_dict, params)
