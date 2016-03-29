@@ -5,7 +5,7 @@ import tornado.httpserver
 import tornado.web
 
 from backend.optimizer.utils import get_data
-from backend.optimizer.optimize import optimize_allocations
+from backend.optimizer.optimize import optimize_portfolio
 
 from tornado.options import define, options, parse_command_line
 
@@ -27,8 +27,8 @@ class MainHandler(tornado.web.RequestHandler):
         """Respond to POST requests with optimal allocations."""
         data = json.loads(self.request.body.decode('utf-8'))
         stock_params = dict(data)
-        allocations = optimize_portfolio(stock_params)
-        self.write(allocations)
+        allocs = optimize_allocations(stock_params)
+        self.write(allocs)
         self.finish()
 
 
@@ -39,12 +39,12 @@ def make_app():
     ])
 
 
-def optimize_portfolio(stock_params):
+def optimize_allocations(stock_params):
     """Call methods to get stock data and find optimal allocations."""
     prices = get_data(stock_params)
-    print(prices)
-    allocs = optimize_allocations(prices)
-    return stock_params  # want to return allocs
+    allocs = optimize_portfolio(prices)
+    print(allocs)
+    return allocs
 
 
 def main():
