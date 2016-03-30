@@ -17,11 +17,15 @@ We use [Yahoo Finance data from Quandl](https://www.quandl.com/data/YAHOO). Admi
 2. Install [Python 3.5.1](https://docs.python.org/3/) or greater.
 3. Build the Anaconda environment.
   * Install [Anaconda](http://conda.pydata.org/docs/installation.html). If you would like a lighter installation, follow the instructions to install [Miniconda](http://conda.pydata.org/docs/install/quick.html) instead.
-  * `cd` into `./portfolio_optimizer/optimizer/`
-  * Use `conda env create -f ./optimizer/environment.yml` to install the python dependencies for the backend.
+  * `cd` into the application root, `./portfolio_optimizer/`
+  * Use `conda env create -f ./backend/environment.yml` to install the Python dependencies for the backend. This will create a `conda` environment called `stocks`.
+  * Activate the `stocks` environment using `source activate stocks` on Linux/OS X or `activate stocks` on Windows. You can deactivate the conda environment using `source deactivate` on Linux/OS X or `deactivate` on Windows.
+4. With the `stocks` environment activated, run `python -m backend.app` from the application root, `./portfolio_optimizer/`
+5. You now have the portfolio optimizing Python backend up and running!
 
 ##Testing
 
-1. `cd` into the root directory, `./portfolio_optimizer`
-2. Run `python -m tornado.testing backend.test.optimizer_test` to test the optimizer module.
-3. Run `python -m tornado.testing backend.test.app_test` to test the backend app.
+1. `cd` into the root directory, `./portfolio_optimizer`, and make sure the Python backend is up and running. See [Getting Started](portfolio_optimizer#getting-started)
+2. Open a new shell session and activate the `conda` environment: `source activate stocks` (Linux/OS X) or `activate stocks`
+3. Run `python -m tornado.testing backend.test.optimizer_test` to test the optimizer module.
+4. Run `python -m tornado.testing backend.test.app_test` to test the backend app.
