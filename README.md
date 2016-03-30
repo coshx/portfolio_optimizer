@@ -23,4 +23,5 @@ We use [Yahoo Finance data from Quandl](https://www.quandl.com/data/YAHOO). Admi
 ##Testing
 
 1. `cd` into the root directory, `./portfolio_optimizer`
-2. Run `python -m tornado.testing optimizer.test.optimizer_test` to test the optimizer.
+2. Run `python -m tornado.testing backend.test.optimizer_test` to test the optimizer module.
+3. Run `python -m tornado.testing backend.test.app_test` to test the backend app.
