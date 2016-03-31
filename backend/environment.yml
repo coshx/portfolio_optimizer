@@ -16,6 +16,7 @@ dependencies:
 - six=1.10.0=py35_0
 - sqlite=3.9.2=0
 - tk=8.5.18=0
+- tornado=4.3=py35_0
 - wheel=0.29.0=py35_0
 - xz=5.0.5=1
 - zlib=1.2.8=0
