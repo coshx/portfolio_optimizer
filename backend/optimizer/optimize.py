@@ -26,13 +26,13 @@ def get_portfolio_value(prices, allocs, start_val=1):
     return port_val
 
 
-def get_portfolio_stats(port_val, daily_rf=0.0014, samples_per_year=252):
+def get_portfolio_stats(port_val, daily_rf=0.0005752, samples_per_year=252):
     """Calculate statistics on given portfolio values.
 
     Parameters
     ----------
         port_val: daily portfolio value
-        daily_rf: daily risk-free rate of return = (1+yearlyrate)^(1/360) - 1
+        daily_rf: daily risk-free rate of return = ((1+yearly_percent)^(1/360) - 1)/100%
         samples_per_year: frequency of sampling (default: 252 trading days)
 
     Returns
