@@ -1,8 +1,12 @@
-import {Component} from 'angular2/core';
+import {Component} from "angular2/core";
+import {InputComponent} from "./input.component";
 
 @Component({
-  selector: 'portfolio-optimizer',
-  template: '<h1>Coshx Portfolio Optimizer</h1>'
+  selector: "app",
+  template: `
+    <h1>Coshx Portfolio Optimizer</h1>
+    <user-input></user-input>`,
+  directives: [InputComponent]
 })
 
 export class AppComponent { }
