@@ -1,12 +1,21 @@
-import {Component} from "angular2/core";
-import {InputComponent} from "./input.component";
+import {Component} from 'angular2/core';
+import {RouterOutlet, RouteConfig, RouteDefinition} from 'angular2/router';
+import {APP_ROUTES} from './app.routes';
+import {NavbarComponent} from './navbar/navbar.component';
+import {LoggerService} from './blocks/logger.service';
 
 @Component({
-  selector: "app",
-  template: `
-    <h1>Coshx Portfolio Optimizer</h1>
-    <user-input></user-input>`,
-  directives: [InputComponent]
+    selector: 'main-app',
+    templateUrl: 'app/app.html',
+    directives: [RouterOutlet, NavbarComponent]
 })
+@RouteConfig(APP_ROUTES)
+export class AppComponent {
+    public appRoutes: RouteDefinition[];
+    private logger: LoggerService;
 
-export class AppComponent { }
+    constructor(logger: LoggerService) {
+        this.logger = logger;
+        this.appRoutes = APP_ROUTES;
+    }
+}

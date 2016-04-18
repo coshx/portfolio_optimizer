@@ -67,6 +67,7 @@ target/
 
 # Typescript
 node_modules/
+bower_components/
 built/*
 tests/cases/rwc/*
 tests/cases/test262/*
