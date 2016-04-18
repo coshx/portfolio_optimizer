@@ -1,6 +1,5 @@
 """Find allocations that maximize Sharpe ratio and return them."""
 
-import pandas as pd
 import numpy as np
 import scipy.optimize as spo
 
@@ -61,7 +60,7 @@ def optimize_allocations(prices):
 
     Keyword arguments:
     data -- dictionary of the following form:
-        {'symbols': ['AAPL', 'GOOG', 'FB'],
+        {'symbols': ['AAPL', 'FB', 'GOOG'],
          'start_date': '01-01-12',
          'end_date': '03-20-16',
          'principle': 1000.00}
@@ -82,7 +81,7 @@ def optimize_allocations(prices):
     cons = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
 
     # 3. Run optimizer
-    ## Output optimizer notes by setting 'disp' to True
+    ## Get optimizer notes by setting 'disp' to True
     result = spo.minimize(sharpe, num_stocks * [1. / num_stocks],
                           method='SLSQP', bounds=bnds,
                           constraints=cons, options={'disp': False})
@@ -96,7 +95,7 @@ def optimize_portfolio(prices):
     prices = prices.reindex_axis(sorted(prices.columns), axis=1)
     symbols = list(prices.columns.values)
     allocs = optimize_allocations(prices)
-    allocs = allocs / np.sum(allocs)  # normalize allocations, if they don't sum to 1.0
+    allocs = allocs / np.sum(allocs)
 
     # Get daily portfolio value (already normalized since we use default start_val=1.0)
     port_val = get_portfolio_value(prices, allocs)
@@ -104,22 +103,23 @@ def optimize_portfolio(prices):
     # Get portfolio statistics (note: std_daily_ret = volatility)
     cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(port_val)
 
-    # # May want to compare daily portfolio value with normalized SPY
-    # # Could break this out and may another async call
+    ## To compare daily portfolio value with normalized SPY:
     # normed_SPY = prices_SPY / prices_SPY.ix[0, :]
     # df_temp = pd.concat([port_val, normed_SPY], keys=['Portfolio', 'SPY'], axis=1)
+
     return {k: v for (k, v) in zip(symbols, allocs)}
 
 
 def test_run():
     """Driver function."""
-    # Define input parameters
-    start_date = '2004-01-01'
-    end_date = '2008-01-31'
-    symbols = ['YHOO', 'HPQ', 'GLD', 'HNZ']  # list of symbols
-    
-    # Optimize portfolio
-    optimize_portfolio(start_date, end_date, symbols)
+    from utils import get_data
+    params = {'symbols': ['AAPL', 'FB', 'GOOG'],
+              'start_date': '01-01-12',
+              'end_date': '03-20-16',
+              'principle': 1000.00}
+    prices = get_data(params)
+    allocs = optimize_portfolio(prices)
+    print(allocs)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,7 @@
 """Given ticker symbols and dates, get stock data from Quandl."""
 
 import Quandl
-import numpy as np
 import pandas as pd
-
-from collections import OrderedDict
 
 
 def get_data(params):
@@ -12,7 +9,7 @@ def get_data(params):
 
     Keyword arguments:
     data -- dictionary of the following form:
-        {'symbols': ['AAPL', 'GOOG'],
+        {'symbols': ['AAPL', 'FB', 'GOOG'],
          'start_date': '01-01-12',
          'end_date': '03-20-16',
          'principle': 1000.00}
@@ -39,7 +36,7 @@ def hit_quandl(symbol, start, end):
 
 
 def main():
-    params = {'symbols': ['AAPL', 'GOOG', 'FB'],
+    params = {'symbols': ['AAPL', 'FB', 'GOOG'],
               'start_date': '01-01-12',
               'end_date': '03-20-16',
               'principle': 1000.00}
