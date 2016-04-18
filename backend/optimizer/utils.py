@@ -41,7 +41,6 @@ def main():
               'end_date': '03-20-16',
               'principle': 1000.00}
     print(get_data(params))
-    return get_data(params)
 
 if __name__ == "__main__":
     main()
