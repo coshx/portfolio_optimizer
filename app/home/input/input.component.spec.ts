@@ -32,7 +32,20 @@ describe('InputComponent', () => {
     provide(APP_BASE_HREF, { useValue: '/' }),
   ]);
 
-  it('should have a user input panel',
+  it('should have a user input panel titled "Add Stocks"',
+     injectAsync([TestComponentBuilder],
+                 (tsb: TestComponentBuilder) => {
+                   return tsb.createAsync(TestComponent).then((fixture) => {
+                     fixture.detectChanges();
+                     let compiled = fixture.debugElement.nativeElement;
+                     expect(compiled).toBeDefined();
+                     expect(compiled.querySelector('.panel'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('.panel-title'))
+                       .toHaveText('Add Stocks');
+                   });
+                 }));
+  it('should have four form fields',
      injectAsync([TestComponentBuilder],
                  (tsb: TestComponentBuilder) => {
                    return tsb.createAsync(TestComponent).then((fixture) => {
