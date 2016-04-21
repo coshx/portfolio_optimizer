@@ -1,12 +1,15 @@
 import {Injectable, Component} from 'angular2/core';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
-import { Optimization } from './optimization';
+import {Optimization} from './optimization';
+import {BarchartComponent} from './barchart/barchart.component';
+import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
   selector: 'user-input',
   templateUrl: 'app/home/input/input.html',
   styleUrls: ['app/home/input/input.css'],
-  providers: [HTTP_PROVIDERS]
+  providers: [HTTP_PROVIDERS],
+  directives: [BarchartComponent, ResultsTableComponent]
 })
 
 @Injectable()

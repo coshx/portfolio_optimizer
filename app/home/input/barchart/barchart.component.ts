@@ -2,8 +2,8 @@ import {Component} from 'angular2/core';
 
 @Component({
   selector: 'barchart',
-  templateUrl: 'app/home/barchart/barchart.html',
-  styleUrls: ['app/home/barchart/barchart.css']
+  templateUrl: 'app/home/input/barchart/barchart.html',
+  styleUrls: ['app/home/input/barchart/barchart.css']
 })
 
 export class BarchartComponent {
