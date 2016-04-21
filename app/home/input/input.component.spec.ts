@@ -41,8 +41,6 @@ describe('InputComponent', () => {
                      expect(compiled).toBeDefined();
                      expect(compiled.querySelector('input[ngcontrol="symbols"]'))
                        .not.toBeNull();
-                     expect(compiled.querySelector('input[ngcontrol="symbols"]'))
-                       .not.toBeNull();
                      expect(compiled.querySelector('input[ngcontrol="startDate"]'))
                        .not.toBeNull();
                      expect(compiled.querySelector('input[ngcontrol="endDate"]'))
