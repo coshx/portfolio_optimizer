@@ -110,7 +110,7 @@ def optimize_portfolio(prices):
     return {k: v for (k, v) in zip(symbols, allocs)}
 
 
-def test_run():
+def main():
     """Driver function."""
     from utils import get_data
     params = {'symbols': ['AAPL', 'FB', 'GOOG'],
@@ -123,4 +123,4 @@ def test_run():
 
 
 if __name__ == "__main__":
-    test_run()
+    main()
