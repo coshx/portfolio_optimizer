@@ -13,9 +13,7 @@
             <input type="text" class="form-control" required
                    [(ngModel)]="model.symbols"
                    ngControl="symbols" #symbols="ngForm" >
-            <div [hidden]="symbols.valid || symbols.pristine" class="alert alert-danger">
-              Enter at least two ticker symbols.
-            </div>
+            <div [hidden]="symbols.valid || symbols.pristine" class="alert alert-danger">Enter at least two ticker symbols.</div>
           </div>
 
           <div class="form-group">
@@ -23,9 +21,7 @@
             <input type="text" class="form-control" required
                    [(ngModel)]="model.startDate"
                    ngControl="startDate" #startDate="ngForm" >
-            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">
-              Enter a date in form mm-dd-yy.
-            </div>
+            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
           </div>
 
           <div class="form-group">
@@ -33,9 +29,7 @@
             <input type="text" class="form-control" required
                    [(ngModel)]="model.endDate"
                    ngControl="endDate" #endDate="ngForm" >
-            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">
-              Enter a date in form mm-dd-yy.
-            </div>
+            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
           </div>
 
           <div class="form-group">
@@ -43,14 +37,10 @@
             <input type="text" class="form-control" required
                    [(ngModel)]="model.initialInvestment"
                    ngControl="initialInvestment" #initialInvestment="ngForm" >
-            <div [hidden]="initialInvestment.valid || initialInvestment.pristine" class="alert alert-danger">
-              Enter an initial investment in dollars.
-            </div>
+            <div [hidden]="initialInvestment.valid || initialInvestment.pristine" class="alert alert-danger">Enter an initial investment in dollars.</div>
           </div>
 
-          <button type="submit" class="btn btn-default" [disabled]="!inputForm.form.valid">
-            Optimize
-          </button>
+          <button type="submit" class="btn btn-default" [disabled]="!inputForm.form.valid">Optimize</button>
 
         </form>
       </div>
