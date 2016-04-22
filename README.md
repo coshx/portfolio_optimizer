@@ -20,7 +20,7 @@ We use [Yahoo Finance data from Quandl](https://www.quandl.com/data/YAHOO). Admi
   * `cd` into the application root, `./portfolio_optimizer/`
   * Use `conda env create -f ./backend/environment.yml` to install the Python dependencies for the backend. This will create a `conda` environment called `stocks`.
   * Activate the `stocks` environment using `source activate stocks` on Linux/OS X or `activate stocks` on Windows. You can deactivate the conda environment using `source deactivate` on Linux/OS X or `deactivate` on Windows.
-4. With the `stocks` environment activated, run `python -m backend.app` from the application root, `./portfolio_optimizer/`
+4. With the `stocks` environment activated, run `python -m backend.app --port=3001` from the application root, `./portfolio_optimizer/`
 5. You now have the portfolio optimizing Python backend up and running!
 
 ##Testing
