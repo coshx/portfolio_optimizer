@@ -25,8 +25,8 @@ describe('HomeComponent', () => {
 
   it('should have a user input component',
      injectAsync([TestComponentBuilder],
-                 (tsb: TestComponentBuilder) => {
-                   return tsb.createAsync(TestComponent).then((fixture) => {
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
                      fixture.detectChanges();
                      let compiled = fixture.debugElement.nativeElement;
                      expect(compiled).toBeDefined();
@@ -37,8 +37,8 @@ describe('HomeComponent', () => {
 
   it('should have a barchart component',
      injectAsync([TestComponentBuilder],
-                 (tsb: TestComponentBuilder) => {
-                   return tsb.createAsync(TestComponent).then((fixture) => {
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
                      fixture.detectChanges();
                      let compiled = fixture.debugElement.nativeElement;
                      expect(compiled).toBeDefined();
@@ -49,8 +49,8 @@ describe('HomeComponent', () => {
 
   it('should have a results table component',
      injectAsync([TestComponentBuilder],
-                 (tsb: TestComponentBuilder) => {
-                   return tsb.createAsync(TestComponent).then((fixture) => {
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
                      fixture.detectChanges();
                      let compiled = fixture.debugElement.nativeElement;
                      expect(compiled).toBeDefined();
