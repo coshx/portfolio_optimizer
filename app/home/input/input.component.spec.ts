@@ -1,18 +1,24 @@
-import {it, expect, beforeEachProviders, describe, TestComponentBuilder,
+import {it, expect, beforeEachProviders, injectAsync, describe, TestComponentBuilder,
   MockApplicationRef} from 'angular2/testing';
 import {APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, ROUTER_PROVIDERS} from 'angular2/router';
 import {Injectable, Component, provide, ApplicationRef} from 'angular2/core';
+import {FORM_DIRECTIVES} from 'angular2/common';
 import {InputComponent} from './input.component';
-import {BarchartComponent} from './barchart/barchart.component';
-import {ResultsTableComponent} from './results-table/results-table.component';
 import {Optimization} from './optimization';
 import {LoggerService} from '../../blocks/logger.service';
 
 @Component({
   selector: 'test',
   templateUrl: 'app/home/input/input.html',
-  directives: [InputComponent, BarchartComponent, ResultsTableComponent]
+  directives: [InputComponent, FORM_DIRECTIVES]
 })
+
+// let optimizationInfo = new ControlGroup({
+//   symbols: new Control(['GOOG', 'FB', 'HP']),
+//   startDate: new Control('01-01-12'),
+//   endDate: new Control('03-20-16'),
+//   initialInvestment: new Control(1000)
+// });
 
 @Injectable()
 class TestComponent {
@@ -24,7 +30,6 @@ class TestComponent {
 }
 
 describe('InputComponent with a valid model', () => {
-  tcb: TestComponentBuilder;
   beforeEachProviders(() => [
     LoggerService,
     ROUTER_PROVIDERS,
@@ -32,63 +37,70 @@ describe('InputComponent with a valid model', () => {
     provide(ApplicationRef, { useClass: MockApplicationRef }),
     provide(APP_BASE_HREF, { useValue: '/' }),
   ]);
-
-  beforeEach((_tcb) => {
-
-    tcb = _tcb;
-  });
 
   it('should have a user input panel titled "Add Stocks"',
-    tcb.createAsync(TestComponent).then((fixture) => {
-      fixture.detectChanges();
-      let compiled = fixture.debugElement.nativeElement;
-      expect(compiled).toBeDefined();
-      expect(compiled.querySelector('.panel'))
-        .not.toBeNull();
-      expect(compiled.querySelector('.panel-title'))
-        .toHaveText('Add Stocks');
-    }));
+     injectAsync([TestComponentBuilder],
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
+                     fixture.detectChanges();
+                     let compiled = fixture.debugElement.nativeElement;
+                     expect(compiled).toBeDefined();
+                     expect(compiled.querySelector('.panel'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('.panel-title'))
+                       .toHaveText('Add Stocks');
+                   });
+                 }));
+
+  it('should have a GOOG, FB, and HP as default stock symbols',
+     injectAsync([TestComponentBuilder],
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
+                     fixture.detectChanges();
+                     let compiled = fixture.debugElement.nativeElement;
+                     expect(compiled).toBeDefined();
+                     expect(compiled.querySelector('.panel-title'))
+                       .toHaveText('Add Stocks');
+                   });
+                 }));
 
   it('should have four form fields and an optimize button',
-    tcb.createAsync(TestComponent).then((fixture) => {
-      fixture.detectChanges();
-      let compiled = fixture.debugElement.nativeElement;
-      expect(compiled).toBeDefined();
-      expect(compiled.querySelector('input[ngcontrol="symbols"]'))
-        .not.toBeNull();
-      expect(compiled.querySelector('input[ngcontrol="startDate"]'))
-        .not.toBeNull();
-      expect(compiled.querySelector('input[ngcontrol="endDate"]'))
-        .not.toBeNull();
-      expect(compiled.querySelector('input[ngcontrol="initialInvestment"]'))
-        .not.toBeNull();
-      expect(compiled.querySelector('button[type="submit"]'))
-        .not.describe();
-    }));
+     injectAsync([TestComponentBuilder],
+                 (tcb: TestComponentBuilder) => {
+                   return tcb.createAsync(TestComponent).then((fixture) => {
+                     fixture.detectChanges();
+                     let compiled = fixture.debugElement.nativeElement;
+                     expect(compiled).toBeDefined();
+                     expect(compiled.querySelector('input[ngcontrol="symbols"]'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('input[ngcontrol="startDate"]'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('input[ngcontrol="endDate"]'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('input[ngcontrol="initialInvestment"]'))
+                       .not.toBeNull();
+                     expect(compiled.querySelector('button[type="submit"]'))
+                       .not.toBeNull();
+                   });
+                 }));
 });
-/*
-toBeNull('InputComponent with an invalid model', () => {
-  beforeEachProviders(() => [
-    TestComponentBuilder,
 
+describe('InputComponent with an invalid model', () => {
+  beforeEachProviders(() => [
     LoggerService,
     ROUTER_PROVIDERS,
     provide(ROUTER_PRIMARY_COMPONENT, { useValue: InputComponent }),
     provide(ApplicationRef, { useClass: MockApplicationRef }),
     provide(APP_BASE_HREF, { useValue: '/' }),
   ]);
-
-  beforeEach(inject([TestComponentBuilder], _tcb => {
-    tcb = _tcb;
-  }));
 
   it('should raise an alert when the "ticker symbols" field is empty',
      injectAsync([TestComponentBuilder],
                  (tcb: TestComponentBuilder) => {
                    console.log('tcb:', tcb);
                    return tcb.createAsync(TestComponent).then((fixture) => {
-                     fixture.componentInstance.model.symbols = null;
                      fixture.detectChanges();
+                     fixture.componentInstance.model.symbols = null;
                      let compiled = fixture.debugElement.nativeElement;
                      expect(compiled.querySelector('.alert'))
                        .toHaveText('Enter at least two ticker symbols.');
@@ -99,11 +111,18 @@ toBeNull('InputComponent with an invalid model', () => {
      injectAsync([TestComponentBuilder],
                  (tcb: TestComponentBuilder) => {
                    return tcb.createAsync(TestComponent).then((fixture) => {
-                     fixture.componentInstance.model.startDate = null;
                      fixture.detectChanges();
-                     let compiled = fixture.debugElement.nativeElement;
-                     expect(compiled.querySelector('.alert'))
-                       .toHaveText('Enter a date in form mm-dd-yy.');
+                     fixture.componentInstance.model.startDate = null;
+                     console.log('model', fixture.componentInstance.model);
+                     console.log('startDate', fixture.componentInstance.model.startDate);
+                     let compiled = fixture.nativeElement;
+                     console.log('fixture', fixture.nativeElement);
+                     console.log('input.ng-dirty', compiled.querySelector('input.ng-dirty'));
+                     console.log('div.alert:not([hidden])', compiled.querySelector('div.alert:not([hidden])'));
+
+                     expect(compiled.querySelector('input.ng-dirty'))
+                       .not.toBeNull();
+                       // .toHaveText('Enter a date in form mm-dd-yy.');
                    });
                  }));
 
@@ -127,7 +146,7 @@ toBeNull('InputComponent with an invalid model', () => {
                      fixture.detectChanges();
                      let compiled = fixture.debugElement.nativeElement;
                      expect(compiled.querySelector('.alert'))
-                       .toHaveText('Enter a date in form mm-dd-yy.');
+                       .toHaveText('Enter an initial investment in dollars.');
                    });
                  }));
 
@@ -142,4 +161,3 @@ toBeNull('InputComponent with an invalid model', () => {
                    });
                  }));
 });
-*/
