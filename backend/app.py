@@ -4,8 +4,8 @@ import tornado.ioloop
 import tornado.httpserver
 import tornado.web
 
-from backend.optimizer.utils import get_data
-from backend.optimizer.optimize import optimize_portfolio
+from optimizer.utils import get_data
+from optimizer.optimize import optimize_portfolio
 
 from tornado.options import define, options, parse_command_line
 
