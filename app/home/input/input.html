@@ -5,8 +5,8 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
-        <form [ngFormModel]="form" (ngSubmit)="submitData()">
-
+        <form #inputForm="ngForm" [ngFormModel]="form" (ngSubmit)="submitData(inputForm)">
+          {{diagnostic}}
           <div class="form-group">
             <label for="symbols">Ticker symbols</label>
             <input type="text" class="form-control" ngControl="symbols" #symbols="ngForm">
@@ -23,13 +23,13 @@
           <div class="form-group">
             <label for="startDate">Start date</label>
             <input type="text" class="form-control" ngControl="startDate" #startDate="ngForm">
-            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
+            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">Enter a date in form mm/dd/yyyy.</div>
           </div>
 
           <div class="form-group">
             <label for="endDate">End date</label>
             <input type="text" class="form-control" ngControl="endDate" #endDate="ngForm">
-            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
+            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">Enter a date in form mm/dd/yyyy.</div>
           </div>
 
           <div class="form-group">

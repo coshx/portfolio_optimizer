@@ -37,15 +37,15 @@ export class InputComponent {
     );
 
     this.startDate = new Control(
-      '01-01-12',
+      '01/01/2012',
       Validators.compose([Validators.required,
-                          Validators.pattern('[0-9]{2}\-[0-9]{2}\-[0-9]{2}')])
+                          Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
     );
 
     this.endDate = new Control(
-      '03-20-16',
+      '03/20/2016',
       Validators.compose([Validators.required,
-                          Validators.pattern('[0-9]{2}\-[0-9]{2}\-[0-9]{2}')])
+                          Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
     );
 
     this.initialInvestment = new Control(
@@ -61,12 +61,14 @@ export class InputComponent {
     });
   }
 
-  submitData() {
-    this.form.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.http.post('http://localhost:8000', JSON.stringify(this.form.value))
+  submitData(inputForm: ControlGroup) {
+    inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
+    this.http.post('http://localhost:8000', JSON.stringify(inputForm.value))
       .subscribe(
         data => this.response = data.json(),
         err => console.log(err)
       );
   }
+
+  get diagnostic() { return JSON.stringify(this.response); }
 };
