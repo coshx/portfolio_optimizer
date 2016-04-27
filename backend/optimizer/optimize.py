@@ -61,8 +61,8 @@ def optimize_allocations(prices):
     Keyword arguments:
     data -- dictionary of the following form:
         {'symbols': ['AAPL', 'FB', 'GOOG'],
-         'start_date': '01-01-12',
-         'end_date': '03-20-16',
+         'start_date': '01/01/2012',
+         'end_date': '03/20/2016',
          'principle': 1000.00}
 
     Returns
@@ -114,8 +114,8 @@ def main():
     """Driver function."""
     from utils import get_data
     params = {'symbols': ['AAPL', 'FB', 'GOOG'],
-              'start_date': '01-01-12',
-              'end_date': '03-20-16',
+              'start_date': '01/01/2012',
+              'end_date': '03/20/2016',
               'principle': 1000.00}
     prices = get_data(params)
     allocs = optimize_portfolio(prices)
