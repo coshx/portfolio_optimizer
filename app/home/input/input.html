@@ -4,46 +4,44 @@
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-6">
-        <p>Enter stock information below.</p>
-        <form *ngIf="active" (ngSubmit)="onSubmit()" #inputForm="ngForm">
-          {{diagnostic}}
+      <div class="col-md-12">
+        <form [ngFormModel]="form" (ngSubmit)="submitData()">
+
           <div class="form-group">
             <label for="symbols">Ticker symbols</label>
-            <input type="text" class="form-control" required
-                   [(ngModel)]="model.symbols"
-                   ngControl="symbols" #symbols="ngForm" >
+            <input type="text" class="form-control" ngControl="symbols" #symbols="ngForm">
             <div [hidden]="symbols.valid || symbols.pristine" class="alert alert-danger">Enter at least two ticker symbols.</div>
+            <!--><div class="alert alert-danger" *ngIf="symbols.pending">Fetching data from the server...</div>
+            <div class="alert alert-danger" *ngIf="symbols.dirty && !symbols.valid && !symbols.pending && symbols.errors.rquired">Symbols is required.</div>
+            <div *ngIf="symbols.dirty && !symbols.valid && !symbols.pending">
+              <p *ngIf="symbols.errors.required">Symbols is required.</p>
+              <p *ngIf="symbols.errors.startsWithNumber">Your symbols can't start with a number</p>
+            </div>
+            -->
           </div>
 
           <div class="form-group">
             <label for="startDate">Start date</label>
-            <input type="text" class="form-control" required
-                   [(ngModel)]="model.startDate"
-                   ngControl="startDate" #startDate="ngForm" >
+            <input type="text" class="form-control" ngControl="startDate" #startDate="ngForm">
             <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
           </div>
 
           <div class="form-group">
             <label for="endDate">End date</label>
-            <input type="text" class="form-control" required
-                   [(ngModel)]="model.endDate"
-                   ngControl="endDate" #endDate="ngForm" >
+            <input type="text" class="form-control" ngControl="endDate" #endDate="ngForm">
             <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">Enter a date in form mm-dd-yy.</div>
           </div>
 
           <div class="form-group">
             <label for="initialInvestment">Initial investment</label>
-            <input type="text" class="form-control" required
-                   [(ngModel)]="model.initialInvestment"
-                   ngControl="initialInvestment" #initialInvestment="ngForm" >
+            <input type="text" class="form-control" ngControl="initialInvestment" #initialInvestment="ngForm">
             <div [hidden]="initialInvestment.valid || initialInvestment.pristine" class="alert alert-danger">Enter an initial investment in dollars.</div>
           </div>
 
-          <button type="submit" class="btn btn-default" [disabled]="!inputForm.form.valid">Optimize</button>
+          <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Optimize</button>
 
         </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
