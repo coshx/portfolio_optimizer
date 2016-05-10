@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -26,3 +27,122 @@ testem.log
 
 #System Files
 .DS_Store
+||||||| merged common ancestors
+=======
+# Emacs
+/#*
+*.org
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+#Ipython Notebook
+.ipynb_checkpoints
+
+# Typescript
+node_modules/
+bower_components/
+built/*
+tests/cases/rwc/*
+tests/cases/test262/*
+tests/cases/perf/*
+!tests/cases/webharness/compilerToString.js
+test-args.txt
+~*.docx
+tests/baselines/local/*
+tests/services/baselines/local/*
+tests/baselines/prototyping/local/*
+tests/baselines/rwc/*
+tests/baselines/test262/*
+tests/baselines/reference/projectOutput/*
+tests/baselines/local/projectOutput/*
+tests/services/baselines/prototyping/local/*
+tests/services/browser/typescriptServices.js
+scripts/configureNightly.js
+scripts/processDiagnosticMessages.d.ts
+scripts/processDiagnosticMessages.js
+scripts/importDefinitelyTypedTests/importDefinitelyTypedTests.js
+src/harness/*.js
+src/compiler/diagnosticInformationMap.generated.ts
+src/compiler/diagnosticMessages.generated.json
+rwc-report.html
+*.swp
+build.json
+*.actual
+tests/webhost/*.d.ts
+tests/webhost/webtsc.js
+tests/cases/**/*.js
+tests/cases/**/*.js.map
+tests/cases/**/*.d.ts
+*.config
+scripts/debug.bat
+scripts/run.bat
+scripts/word2md.js
+scripts/ior.js
+scripts/*.js.map
+scripts/typings/
+coverage/
+internal/
+**/.DS_Store
+.settings
+.vscode/*
+!.vscode/tasks.json
+typings/
+>>>>>>> e9903edeab474440e52aacc39625731dd135ea93
