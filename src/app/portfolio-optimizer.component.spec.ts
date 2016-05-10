@@ -16,7 +16,7 @@ describe('App: PortfolioOptimizer', () => {
   }));
 
   it('should have as title \'portfolio-optimizer works!\'',
-      inject([PortfolioOptimizerAppComponent], (app: PortfolioOptimizerAppComponent) => {
-    expect(app.title).toEqual('portfolio-optimizer works!');
+     inject([PortfolioOptimizerAppComponent], (app: PortfolioOptimizerAppComponent) => {
+       expect(app.title).toEqual('portfolio-optimizer works!');
   }));
 });

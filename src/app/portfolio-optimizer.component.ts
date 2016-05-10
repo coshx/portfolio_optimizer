@@ -17,6 +17,7 @@ import { SimplebindComponent } from './simplebind/simplebind.component';
 @RouteConfig(APP_ROUTES)
 export class PortfolioOptimizerAppComponent {
   public appRoutes: RouteDefinition[];
+  title = 'portfolio-optimizer-works!';
 
   constructor() {
     this.appRoutes = APP_ROUTES;
