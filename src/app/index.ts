@@ -1,2 +1,2 @@
 export { environment } from './environment';
-export { PortfolioOptimizerAppComponent } from './portfolio-optimizer.component';
+export { StocksAppComponent } from './stocks-app.component';
