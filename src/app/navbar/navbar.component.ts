@@ -3,10 +3,11 @@ import {CORE_DIRECTIVES} from '@angular/common';
 import {RouterLink, RouteDefinition} from '@angular/router-deprecated';
 
 @Component({
-    selector: 'navbar',
-    templateUrl: 'app/navbar/navbar.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    directives: [RouterLink, CORE_DIRECTIVES]
+  selector: 'navbar',
+  templateUrl: 'app/navbar/navbar.html',
+  styleUrls: ['app/navbar/navbar.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  directives: [RouterLink, CORE_DIRECTIVES]
 })
 export class NavbarComponent {
     @Input() brand: string;
