@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouteConfig, RouteDefinition } from '@angular/router-deprecated';
+import { Component, OnInit } from '@angular/core';
+import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
-import { APP_ROUTES } from './app.routes';
-import { NavbarComponent } from './navbar/navbar.component';
+import { OptimizerComponent } from './optimizer/optimizer.component';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'stocks-app',
-  templateUrl: 'app/stocks-app.component.html',
-  directives: [RouterOutlet, NavbarComponent],
-  styleUrls: ['app/stocks-app.component.css']
+  templateUrl: 'stocks-app.component.html',
+  styleUrls: ['stocks-app.component.css'],
+  directives: [ROUTER_DIRECTIVES]
 })
-@RouteConfig(APP_ROUTES)
-export class StocksAppComponent {
-  public appRoutes: RouteDefinition[];
+@Routes([
+  {path: '/optimizer', component: OptimizerComponent}
+])
+export class StocksAppComponent implements OnInit {
+  constructor(private router: Router) {}
+  siteName = 'Coshx Finance Tools';
 
-  constructor() {
-    this.appRoutes = APP_ROUTES;
+  ngOnInit() {
+    this.router.navigate(['/optimizer']);
   }
 }

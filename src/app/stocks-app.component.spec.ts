@@ -17,8 +17,8 @@ describe('The StocksAppComponent.', () => {
        expect(app).toBeTruthy();
      }));
 
-  it('should have an attribute that contains application routes.',
-     inject([StocksAppComponent], (app: StocksAppComponent) => {
-       expect(app.appRoutes).toBeTruthy();
-     }));
+  // it('should have an attribute that contains application routes.',
+  //    inject([StocksAppComponent], (app: StocksAppComponent) => {
+  //      expect(app.appRoutes).toBeTruthy();
+  //    }));
 });
