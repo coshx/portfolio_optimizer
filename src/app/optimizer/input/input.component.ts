@@ -1,4 +1,4 @@
-import {Injectable, Component} from '@angular/core';
+import {Injectable, Component, OnInit} from '@angular/core';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 import {
   FormBuilder,
@@ -12,15 +12,16 @@ import {BarchartComponent} from './barchart/barchart.component';
 import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
+  moduleId: module.id,
   selector: 'user-input',
-  templateUrl: 'app/home/input/input.html',
-  styleUrls: ['app/home/input/input.css'],
+  templateUrl: 'input.html',
+  styleUrls: ['input.css'],
   providers: [HTTP_PROVIDERS],
   directives: [FORM_DIRECTIVES, BarchartComponent, ResultsTableComponent]
 })
 
 @Injectable()
-export class InputComponent {
+export class InputComponent implements OnInit{
   response;
   form: ControlGroup;
 
@@ -71,4 +72,7 @@ export class InputComponent {
   }
 
   get diagnostic() { return JSON.stringify(this.response); }
+
+  ngOnInit() {
+  }
 };
