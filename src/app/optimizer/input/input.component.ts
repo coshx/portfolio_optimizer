@@ -14,8 +14,8 @@ import {ResultsTableComponent} from './results-table/results-table.component';
 @Component({
   moduleId: module.id,
   selector: 'user-input',
-  templateUrl: 'input.html',
-  styleUrls: ['input.css'],
+  templateUrl: 'input.component.html',
+  styleUrls: ['input.component.css'],
   providers: [HTTP_PROVIDERS],
   directives: [FORM_DIRECTIVES, BarchartComponent, ResultsTableComponent]
 })
