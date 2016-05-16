@@ -20,10 +20,11 @@ const barrels: string[] = [
   '@angular/compiler',
   '@angular/http',
   '@angular/router',
+  '@angular/router-deprecated',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
 
-  // Thirdparty barrels.
+  // Thirdparty barrels.q
   'rxjs',
 
   // App specific barrels.
