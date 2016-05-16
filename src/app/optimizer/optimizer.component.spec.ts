@@ -19,17 +19,23 @@ describe('Component: Optimizer', () => {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([OptimizerComponent],
+  it('should inject the optimizer component.', inject([OptimizerComponent],
       (component: OptimizerComponent) => {
     expect(component).toBeTruthy();
   }));
 
-  it('should create the component', inject([], () => {
+  it('should create three panels.', inject([], () => {
     return builder.createAsync(OptimizerComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(OptimizerComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
+        let childNodes = fixture.debugElement.childNodes;
+        expect(childNodes.length).toEqual(3);
+
+        let inputPanel = fixture.debugElement.query(By.css('user-input'));
+        expect(inputPanel).toBeTruthy();
+        let barchartPanel = fixture.debugElement.query(By.css('barchart'));
+        expect(barchartPanel).toBeTruthy();
+        let resultsTablePanel = fixture.debugElement.query(By.css('results-table'));
+        expect(resultsTablePanel).toBeTruthy();
       });
   }));
 });
