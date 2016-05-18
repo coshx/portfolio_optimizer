@@ -26,4 +26,16 @@ export class PortfolioOptimizerPage {
   getInitialInvestment() {
     return element(by.css('input[ngcontrol="initialInvestment"]')).getText();
   }
+
+  getAllocationsChart() {
+    return element(by.css('svg')).getSize();
+  }
+
+  getResultsTableHeader() {
+    return element(by.css('thead')).all(by.css('th')).getText();
+  }
+
+  getResultsTableBody() {
+    return element(by.css('tbody')).all(by.css('tr')).getText();
+  }
 }
