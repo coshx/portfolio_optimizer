@@ -30,7 +30,7 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
-  'app/home',
+  'app/home',  // should this be 'optimizer' now?
   'app/volatility',
   /** @cli-barrel */
 ];
@@ -48,6 +48,7 @@ System.config({
   map: {
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
+    'd3': 'vendor/d3/d3.js',
     'main': 'main.js'
   },
   packages: cliSystemConfigPackages
