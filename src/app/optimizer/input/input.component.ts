@@ -64,7 +64,7 @@ export class InputComponent implements OnInit{
 
   submitData(inputForm: ControlGroup) {
     inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.http.post('http://localhost:8000', JSON.stringify(inputForm.value))
+    this.http.post('http://stocks.coshx.com/backend', JSON.stringify(inputForm.value))
       .subscribe(
         data => this.response = data.json(),
         err => console.log(err)
