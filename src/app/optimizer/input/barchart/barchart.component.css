@@ -1,8 +1,18 @@
-* >>> .chart div {
+* >>> .bar {
+  fill: steelblue;
+}
+
+* >>> .axis text {
   font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+}
+
+* >>> .axis path,
+* >>> .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+* >>> .x.axis path {
+  display: none;
 }
