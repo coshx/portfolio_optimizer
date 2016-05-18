@@ -28,8 +28,7 @@ export class BarchartComponent implements OnInit {
 
     var yAxis = d3.svg.axis()
       .scale(y)
-      .orient('left')
-      .ticks(10, '%');
+      .orient('left');
 
     var chart = d3.select('.chart')
       .attr('width', width + margin.left + margin.right)
@@ -37,7 +36,7 @@ export class BarchartComponent implements OnInit {
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    d3.tsv('/app/optimizer/input/barchart/data.tsv', type, function(error, data) {
+    d3.tsv('/app/optimizer/barchart/data.tsv', type, function(error, data) {
       x.domain(data.map(function(d) { return d.letter; }));
       y.domain([0, d3.max(data, function(d) { return d['frequency']; })]);
 

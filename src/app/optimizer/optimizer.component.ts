@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import {InputComponent} from './input/input.component';
-import {BarchartComponent} from './input/barchart/barchart.component';
-import {ResultsTableComponent} from './input/results-table/results-table.component';
+import {BarchartComponent} from './barchart/barchart.component';
+import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
   moduleId: module.id,

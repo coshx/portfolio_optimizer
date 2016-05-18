@@ -8,8 +8,6 @@ import {
   FORM_DIRECTIVES} from '@angular/common';
 
 import {SymbolsValidator} from './symbols.validator';
-import {BarchartComponent} from './barchart/barchart.component';
-import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
   moduleId: module.id,
@@ -17,11 +15,11 @@ import {ResultsTableComponent} from './results-table/results-table.component';
   templateUrl: 'input.component.html',
   styleUrls: ['input.component.css'],
   providers: [HTTP_PROVIDERS],
-  directives: [FORM_DIRECTIVES, BarchartComponent, ResultsTableComponent]
+  directives: [FORM_DIRECTIVES]
 })
 
 @Injectable()
-export class InputComponent implements OnInit{
+export class InputComponent implements OnInit {
   response;
   form: ControlGroup;
 
