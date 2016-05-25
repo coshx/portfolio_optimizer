@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
+import {OptimizerDataService} from '../optimizer-data.service';
+
+
 @Component({
   moduleId: module.id,
   selector: 'barchart',
@@ -9,7 +12,7 @@ import * as d3 from 'd3';
 })
 
 export class BarchartComponent implements OnInit {
-  constructor() {}
+  constructor(private optimizerDataService: OptimizerDataService) {}
 
   ngOnInit() {
     var margin = {top: 20, right: 30, bottom: 30, left: 40},

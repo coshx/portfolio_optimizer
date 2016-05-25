@@ -8,6 +8,7 @@ import {
   FORM_DIRECTIVES} from '@angular/common';
 
 import {SymbolsValidator} from './symbols.validator';
+import {OptimizerDataService} from '../optimizer-data.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,7 @@ export class InputComponent implements OnInit {
   endDate: Control;
   initialInvestment: Control;
 
-  constructor(public http: Http, private builder: FormBuilder) {
+  constructor(public http: Http, private builder: FormBuilder, private optimizerDataService: OptimizerDataService) {
     this.symbols = new Control(
       'AAPL, GOOG, FB',
       Validators.compose([Validators.required,
@@ -62,11 +63,7 @@ export class InputComponent implements OnInit {
 
   submitData(inputForm: ControlGroup) {
     inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.http.post('http://stocks.coshx.com/backend', JSON.stringify(inputForm.value))
-      .subscribe(
-        data => this.response = data.json(),
-        err => console.log(err)
-      );
+    this.optimizerDataService.getOptimizedPortfolio('http://stocks.coshx.com/backend', inputForm.value);
   }
 
   get diagnostic() { return JSON.stringify(this.response); }
