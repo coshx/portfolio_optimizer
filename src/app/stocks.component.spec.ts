@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ROUTER_PRIMARY_COMPONENT, RouteRegistry } from '@angular/router-deprecated';
 import { RootRouter } from '@angular/router-deprecated/src/router';
 
-import { StocksAppComponent } from './stocks-app.component';
+import { StocksAppComponent } from './stocks.component';
 
 beforeEachProviders(() => [
   StocksAppComponent,

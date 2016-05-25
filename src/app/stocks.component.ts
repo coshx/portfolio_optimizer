@@ -7,8 +7,8 @@ import { OptimizerComponent } from './optimizer/optimizer.component';
 @Component({
   moduleId: module.id,
   selector: 'stocks-app',
-  templateUrl: 'stocks-app.component.html',
-  styleUrls: ['stocks-app.component.css'],
+  templateUrl: 'stocks.component.html',
+  styleUrls: ['stocks.component.css'],
   directives: [ROUTER_DIRECTIVES]
 })
 @Routes([
