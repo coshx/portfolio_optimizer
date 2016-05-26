@@ -20,18 +20,19 @@ const barrels: string[] = [
   '@angular/compiler',
   '@angular/http',
   '@angular/router',
-  '@angular/router-deprecated',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
 
-  // Thirdparty barrels.q
+  // Thirdparty barrels.
   'rxjs',
 
   // App specific barrels.
   'app',
   'app/shared',
-  'app/home',  // should this be 'optimizer' now?
-  'app/volatility',
+  'app/optimizer',
+  'app/optimizer/input',
+  'app/optimizer/barchart',
+  'app/optimizer/results-table',
   /** @cli-barrel */
 ];
 
@@ -48,7 +49,6 @@ System.config({
   map: {
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
-    'd3': 'vendor/d3/d3.js',
     'main': 'main.js'
   },
   packages: cliSystemConfigPackages

@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { OptimizerComponent } from './optimizer.component';
+import { BarchartComponent } from './barchart.component';
 
-describe('Component: Optimizer', () => {
+describe('Component: Barchart', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [OptimizerComponent]);
+  beforeEachProviders(() => [BarchartComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([OptimizerComponent],
-      (component: OptimizerComponent) => {
+  it('should inject the component', inject([BarchartComponent],
+      (component: BarchartComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(OptimizerComponentTestController)
+    return builder.createAsync(BarchartComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(OptimizerComponent));
+        let query = fixture.debugElement.query(By.directive(BarchartComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -37,10 +37,10 @@ describe('Component: Optimizer', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-optimizer></app-optimizer>
+    <app-barchart></app-barchart>
   `,
-  directives: [OptimizerComponent]
+  directives: [BarchartComponent]
 })
-class OptimizerComponentTestController {
+class BarchartComponentTestController {
 }
 

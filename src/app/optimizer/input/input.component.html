@@ -1,47 +1,8 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Add Stocks</h3>
-  </div>
+  <div class="panel-heading">Add Stocks</div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12">
-        <form #inputForm="ngForm" [ngFormModel]="form" (ngSubmit)="submitData(inputForm)">
-          {{diagnostic}}
-          <div class="form-group">
-            <label for="symbols">Ticker symbols</label>
-            <input type="text" class="form-control" ngControl="symbols" #symbols="ngForm">
-            <div [hidden]="symbols.valid || symbols.pristine" class="alert alert-danger">Enter at least two ticker symbols.</div>
-            <!--><div class="alert alert-danger" *ngIf="symbols.pending">Fetching data from the server...</div>
-            <div class="alert alert-danger" *ngIf="symbols.dirty && !symbols.valid && !symbols.pending && symbols.errors.rquired">Symbols is required.</div>
-            <div *ngIf="symbols.dirty && !symbols.valid && !symbols.pending">
-              <p *ngIf="symbols.errors.required">Symbols is required.</p>
-              <p *ngIf="symbols.errors.startsWithNumber">Your symbols can't start with a number</p>
-            </div>
-            -->
-          </div>
-
-          <div class="form-group">
-            <label for="startDate">Start date</label>
-            <input type="text" class="form-control" ngControl="startDate" #startDate="ngForm">
-            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">Enter a date in form mm/dd/yyyy.</div>
-          </div>
-
-          <div class="form-group">
-            <label for="endDate">End date</label>
-            <input type="text" class="form-control" ngControl="endDate" #endDate="ngForm">
-            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">Enter a date in form mm/dd/yyyy.</div>
-          </div>
-
-          <div class="form-group">
-            <label for="initialInvestment">Initial investment</label>
-            <input type="text" class="form-control" ngControl="initialInvestment" #initialInvestment="ngForm">
-            <div [hidden]="initialInvestment.valid || initialInvestment.pristine" class="alert alert-danger">Enter an initial investment in dollars.</div>
-          </div>
-
-          <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Optimize</button>
-
-        </form>
-        </div>
-      </div>
-    </div>
+    <p>
+      input works!
+    </p>
   </div>
+</div>
