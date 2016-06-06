@@ -61,8 +61,8 @@ def optimize_allocations(prices):
     Keyword arguments:
     data -- dictionary of the following form:
         {'symbols': ['AAPL', 'FB', 'GOOG'],
-         'start_date': '01-01-12',
-         'end_date': '03-20-16',
+         'start_date': '01/01/2012',
+         'end_date': '03/20/2016',
          'principle': 1000.00}
 
     Returns
@@ -107,15 +107,17 @@ def optimize_portfolio(prices):
     # normed_SPY = prices_SPY / prices_SPY.ix[0, :]
     # df_temp = pd.concat([port_val, normed_SPY], keys=['Portfolio', 'SPY'], axis=1)
 
-    return {k: v for (k, v) in zip(symbols, allocs)}
+    return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
+            'sharpe_ratio': sharpe_ratio,
+            'cumulative_returns': cum_ret}
 
 
 def main():
     """Driver function."""
     from utils import get_data
     params = {'symbols': ['AAPL', 'FB', 'GOOG'],
-              'start_date': '01-01-12',
-              'end_date': '03-20-16',
+              'start_date': '01/01/2012',
+              'end_date': '03/20/2016',
               'principle': 1000.00}
     prices = get_data(params)
     allocs = optimize_portfolio(prices)

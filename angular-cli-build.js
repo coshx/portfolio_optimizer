@@ -1,5 +1,3 @@
-/* global require, module */
-
 var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
 
 module.exports = function(defaults) {
@@ -11,7 +9,8 @@ module.exports = function(defaults) {
       'es6-shim/es6-shim.js',
       'reflect-metadata/*.js',
       'rxjs/**/*.js',
-      '@angular/**/*.js'
+      '@angular/**/*.js',
+      'd3/**/*.js'
     ]
   });
 };

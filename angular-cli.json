@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "0.1.0",
-    "name": "stocks"
+    "name": "portfolio-optimizer"
   },
   "apps": [
     {"main": "src/main.ts", "tsconfig": "src/tsconfig.json"}
