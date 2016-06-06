@@ -48,7 +48,7 @@ System.config({
   map: {
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
-    'd3': 'vendor/d3/d3.js',
+    'd3': 'vendor/d3',
     'main': 'main.js'
   },
   packages: cliSystemConfigPackages
