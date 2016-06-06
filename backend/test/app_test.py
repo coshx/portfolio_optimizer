@@ -1,6 +1,6 @@
 import json
 
-from backend import app
+import app
 
 from tornado.testing import AsyncHTTPTestCase, AsyncTestCase
 from tornado.httpclient import AsyncHTTPClient
@@ -26,8 +26,13 @@ class HandleRequestsTestCase(AsyncHTTPTestCase):
         self.assertEqual(response.code, 200)
 
         res_json = json.loads(response.body.decode('utf-8'))
-        res_symbols = list(dict(res_json).keys())
+        res_keys = list(dict(res_json).keys())
+        self.assertEqual(sorted(res_keys), ['cumulative_returns',
+                                            'optimal_allocations',
+                                            'sharpe_ratio'])
+
+        res_symbols = list(dict(res_json['optimal_allocations']).keys())
         self.assertEqual(sorted(res_symbols), sorted(params['symbols']))
 
-        res_allocs = list(dict(res_json).values())
+        res_allocs = list(dict(res_json['optimal_allocations']).values())
         self.assertEqual(sum(res_allocs), 1.0)

@@ -97,17 +97,19 @@ def optimize_portfolio(prices):
     allocs = optimize_allocations(prices)
     allocs = allocs / np.sum(allocs)
 
-    ## Get daily portfolio value (already normalized since we use default start_val=1.0)
-    #port_val = get_portfolio_value(prices, allocs)
+    # Get daily portfolio value (already normalized since we use default start_val=1.0)
+    port_val = get_portfolio_value(prices, allocs)
 
-    ## Get portfolio statistics (note: std_daily_ret = volatility)
-    #cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(port_val)
+    # Get portfolio statistics (note: std_daily_ret = volatility)
+    cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(port_val)
 
     ## To compare daily portfolio value with normalized SPY:
     # normed_SPY = prices_SPY / prices_SPY.ix[0, :]
     # df_temp = pd.concat([port_val, normed_SPY], keys=['Portfolio', 'SPY'], axis=1)
 
-    return {k: v for (k, v) in zip(symbols, allocs)}
+    return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
+            'sharpe_ratio': sharpe_ratio,
+            'cumulative_returns': cum_ret}
 
 
 def main():
