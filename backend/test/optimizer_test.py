@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 from unittest import TestCase
-from backend.optimizer import utils
+from optimizer import utils
 
 class GetDataFromQuandl(TestCase):
     def setUp(self):
