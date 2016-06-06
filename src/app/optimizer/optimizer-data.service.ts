@@ -21,9 +21,9 @@ export class OptimizerDataService {
     this.startDate = '01/01/2012';
     this.endDate = '03/20/2016';
     this.initialInvestment = '1000';
-    this.optimalAllocs = {'AAPL': '0.0',
-                          'GOOG': '0.54',
-                          'FB': '0.46'};
+    this.optimalAllocs = {'AAPL': 0.0,
+                          'GOOG': 0.55,
+                          'FB': 0.45};
     this.sharpeRatio = '2.1';
   }
 
