@@ -63,7 +63,7 @@ export class InputComponent implements OnInit {
 
   submitData(inputForm: ControlGroup) {
     inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.optimizerDataService.getOptimizedPortfolio('http://stocks.coshx.com/backend', inputForm.value);
+    this.optimizerDataService.optimizePortfolio(inputForm.value);
   }
 
   get diagnostic() { return JSON.stringify(this.response); }

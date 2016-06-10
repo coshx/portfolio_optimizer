@@ -14,16 +14,25 @@ import {ResultsTableComponent} from './results-table/results-table.component';
   directives: [InputComponent, BarchartComponent, ResultsTableComponent],
   providers: [OptimizerDataService, HTTP_PROVIDERS]
 })
-export class OptimizerComponent implements OnInit {
+export class OptimizerComponent {
+  this.optimalAllocs = {AAPL: 0.0,
+                        GOOG: 0.5489549524820141,
+                        FB: 0.4510450475179859};
+  this.sharpeRatio = 0.5730332517669126;
+  history = Object[] = [];
   data;
 
-  constructor(private optimizerDataService: OptimizerDataService) {}
-
-  ngOnInit() {
-    this.getOptimizationData();
+  constructor(private optimizerDataService: OptimizerDataService) {
+    optimizerDataService.optimalAllocs$.subscribe(
+      optimalAllocs
+    )
   }
 
-  getOptimizationData() {
-    this.data = this.optimizerDataService.getOptimizedPortfolio('http://stocks.coshx.com/backend', this.data);
-  }
+  // ngOnInit() {
+  //   this.optimizerDataService.optimizePortfolio();
+  // }
+
+  // getOptimizationData() {
+  //   this.data = this.optimizerDataService.optimizePortfolio(this.data);
+  // }
 }
