@@ -28,8 +28,9 @@ We use [Yahoo Finance data from Quandl](https://www.quandl.com/data/YAHOO). Admi
 
 1. Assuming you've already cloned the repo, navigate to its root, `./portfolio_optiizer`.
 1. Install [Node.js and npm](https://docs.npmjs.com/getting-started/installing-node).
-1. Run `npm install` to install `angular-cli` and other dependencies.
-1. Run `ng server` to begin serving the application on [http://localhost:4200](http://localhost:4200)
+1. Install the Angular 2 command line interface: `npm install -g angular-cli`.
+1. Run `npm install` to install node dependencies.
+1. Run `ng server` to begin serving the application on [http://localhost:4200](http://localhost:4200).
 
 ## Testing
 ## Testing the Backend Data Service
