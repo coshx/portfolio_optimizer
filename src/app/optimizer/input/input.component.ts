@@ -1,4 +1,4 @@
-import {Injectable, Component, OnInit} from '@angular/core';
+import {Injectable, Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 import {
   FormBuilder,
@@ -28,6 +28,8 @@ export class InputComponent implements OnInit {
   startDate: Control;
   endDate: Control;
   initialInvestment: Control;
+
+  @Output() onSubmit = new EventEmitter<ControlGroup>();
 
   constructor(public http: Http, private builder: FormBuilder, private optimizerDataService: OptimizerDataService) {
     this.symbols = new Control(
@@ -63,7 +65,7 @@ export class InputComponent implements OnInit {
 
   submitData(inputForm: ControlGroup) {
     inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.optimizerDataService.optimizePortfolio(inputForm.value);
+    this.onSubmit.emit(inputForm.value)
   }
 
   get diagnostic() { return JSON.stringify(this.response); }
