@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ControlGroup} from '@angular/common';
 import {HTTP_PROVIDERS} from '@angular/http';
 
 import {OptimizerDataService} from './optimizer-data.service';
