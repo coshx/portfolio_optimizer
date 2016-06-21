@@ -8,36 +8,15 @@
         <table class="table table-striped table-hover ">
           <thead>
             <tr>
-              <th>Stock</th>
-              <th>Starting Value</th>
-              <th>Ending Value</th>
-              <th>Sharpe Ratio</th>
+              <th *ngFor="let value of tableRows[0]">{{value}}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>GOOG</td>
-              <td>549</td>
-              <td>600</td>
-              <td></td>
+            <tr *ngFor="let row of tableRows | slice:1:-1">
+              <td *ngFor="let value of row">{{value}}</td>
             </tr>
-            <tr>
-              <td>FB</td>
-              <td>451</td>
-              <td>490</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>AAPL</td>
-              <td>0</td>
-              <td>0</td>
-              <td></td>
-            </tr>
-            <tr class="success">
-              <td>Total</td>
-              <td>1000</td>
-              <td>1090</td>
-              <td>2.5</td>
+            <tr [ngClass]="{'success' : highlightLastRow}">
+              <td *ngFor="let value of tableRows[tableRows.length-1]">{{value}}</td>
             </tr>
           </tbody>
         </table>
