@@ -15,17 +15,15 @@ import {ResultsTableComponent} from './results-table/results-table.component';
   providers: [OptimizerDataService, HTTP_PROVIDERS]
 })
 export class OptimizerComponent {
-  this.optimalAllocs = {AAPL: 0.0,
-                        GOOG: 0.5489549524820141,
-                        FB: 0.4510450475179859};
-  this.sharpeRatio = 0.5730332517669126;
-  history = Object[] = [];
+  optimalAllocs = {AAPL: 0.0,
+                   GOOG: 0.5489549524820141,
+                   FB: 0.4510450475179859};
+  sharpeRatio = 0.5730332517669126;
+  history: Object[] = [];
   data;
 
   constructor(private optimizerDataService: OptimizerDataService) {
-    optimizerDataService.optimalAllocs$.subscribe(
-      optimalAllocs
-    )
+    optimizerDataService.optimalAllocs$.subscribe();
   }
 
   // ngOnInit() {
