@@ -35,12 +35,13 @@ export class OptimizerComponent {
   }
 
   onSubmit(value: Object) {
-    console.log(value);
     this.query = value;
+    this.optimizerDataService.subjectChange(value)
   }
 
  ngOnInit() {
  	this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio'],['GOOG','549','600',''],['FB','451','490',''],['AAPL','0','0',''],['Total','1000','1090','2.5']];
+  this.optimizerDataService.createSubject(this.query);
   //   this.optimizerDataService.optimizePortfolio();
  }
 

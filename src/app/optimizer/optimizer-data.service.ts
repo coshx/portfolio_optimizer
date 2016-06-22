@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Subject, Observable} from 'rxjs/Rx';
+import {Subject, Observable, BehaviorSubject} from 'rxjs/Rx';
 
 @Injectable()
 export class OptimizerDataService {
@@ -26,9 +26,32 @@ export class OptimizerDataService {
   }
 
   response;
+  subject: BehaviorSubject<Object>;
+  subscription;
 
   constructor(private http: Http) {
 
+  }
+
+  createSubject(model: Object) {
+    this.subject = new BehaviorSubject(model);
+    this.subscription = this.subject.subscribe(
+      (x) => {
+        //next value
+        this.optimizePortfolio(x);
+      },
+      (err) => {
+        //error
+        console.log('Error: ' + err);
+      },
+      () => {
+        //stream completed
+        console.log('Completed');
+      });
+  }
+
+  subjectChange(model: Object) {
+    this.subject.next(model);
   }
 
   optimizePortfolio(formData: Object) {
