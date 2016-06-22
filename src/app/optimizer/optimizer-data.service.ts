@@ -25,7 +25,9 @@ export class OptimizerDataService {
     this.sharpeRatioSource.next(sharpeRatio);
   }
 
-  response;
+  responseSubject: BehaviorSubject<Object> = new BehaviorSubject("default");
+  latestResponse;
+
   subject: BehaviorSubject<Object>;
   subscription;
 
@@ -41,13 +43,25 @@ export class OptimizerDataService {
         this.optimizePortfolio(x);
       },
       (err) => {
-        //error
-        console.log('Error: ' + err);
+        console.log('Optimizer Component model error: ' + err);
       },
       () => {
-        //stream completed
-        console.log('Completed');
+        console.log('Optimizer Component model stream completed');
       });
+
+    this.responseSubject.subscribe(
+      (x) => {
+        //next value
+        console.log(x);
+        this.latestResponse = x;
+      },
+      (err) => {
+        console.log('Response stream error: ' + err);
+      },
+      () => {
+        console.log('Response stream completed')
+      });
+
   }
 
   subjectChange(model: Object) {
@@ -56,15 +70,16 @@ export class OptimizerDataService {
 
   optimizePortfolio(formData: Object) {
     let url = 'http://stocks.coshx.com/backend';
-    console.log('form data:', formData);
+    //console.log('form data:', formData);
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
-        data => this.response = data.json(),
+        data => this.responseSubject.next(data.json()),
         err => console.log(err)
       );
   }
 
   private optimizedPortfolio = new Subject<Object>();
   optimizedPortfolio$ = this.optimizedPortfolio.asObservable();
+
 
 }
