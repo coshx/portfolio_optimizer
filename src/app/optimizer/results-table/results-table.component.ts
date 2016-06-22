@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: 'results-table.component.html'
 })
 
-export class ResultsTableComponent implements OnInit {
-  ngOnInit() {
-  }
+export class ResultsTableComponent{
+	@Input() tableRows;
+	@Input() highlightLastRow;
 }

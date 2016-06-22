@@ -28,6 +28,7 @@ export class OptimizerComponent {
   //sharpeRatio = 0.5730332517669126;
   history: Object[] = [];
   data;
+  tableRows;
 
   constructor(private optimizerDataService: OptimizerDataService) {
     optimizerDataService.optimalAllocs$.subscribe();
@@ -38,9 +39,10 @@ export class OptimizerComponent {
     this.query = value;
   }
 
-  // ngOnInit() {
+ ngOnInit() {
+ 	this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio'],['GOOG','549','600',''],['FB','451','490',''],['AAPL','0','0',''],['Total','1000','1090','2.5']];
   //   this.optimizerDataService.optimizePortfolio();
-  // }
+ }
 
   // getOptimizationData() {
   //   this.data = this.optimizerDataService.optimizePortfolio(this.data);
