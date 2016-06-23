@@ -41,6 +41,7 @@ export class OptimizerComponent {
 
  ngOnInit() {
  	this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio'],['GOOG','549','600',''],['FB','451','490',''],['AAPL','0','0',''],['Total','1000','1090','2.5']];
+    this.optimalAllocs = [{'GOOG':'.7'},{'FB':'.3'},{'AAPL':'0'}];
   //   this.optimizerDataService.optimizePortfolio();
  }
 
