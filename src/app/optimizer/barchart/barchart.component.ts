@@ -17,6 +17,7 @@ export class BarchartComponent{
   @Input() optimalAllocs;
   @Input() title;
   chart;
+  viewInitialized = false;
 
  	getPanelBody() {
 		var panelTitleElements = d3.selectAll('.panel-title');
@@ -40,7 +41,7 @@ export class BarchartComponent{
 	}
 	getPanelDimensions() {
 		  var panelBodyElement = this.getPanelBody();
-		  return { width: panelBodyElement.clientWidth, height: panelBodyElement.clientHeight*2 };
+		  return { width: panelBodyElement.clientWidth, height: 400 };
 	}
 	getChartElement() {
 		return d3.select(this.getPanelBody()).select('.chart');
@@ -85,7 +86,7 @@ export class BarchartComponent{
 		this.chart.select('.y.axis')
 			.call(yAxis);
 
-		this.chart.selectAll('.bar').
+		this.chart.selectAll('.bar').remove();
 
 		this.chart.selectAll('.bar')
 			.data(this.optimalAllocs)
@@ -94,8 +95,7 @@ export class BarchartComponent{
 			.attr('x', function(d) { return x(Object.keys(d)[0]); })
 			.attr('y', function(d) { return y(parseFloat((d as any)[Object.keys(d)[0]])); })
 			.attr('height', function(d) { return height - y(parseFloat((d as any)[Object.keys(d)[0]])); })
-			.attr('width', x.rangeBand())
-			.exit().remove();
+			.attr('width', x.rangeBand());
 	}
 
 	createChart()
@@ -156,11 +156,14 @@ export class BarchartComponent{
 	ngAfterViewInit()
 	{
 		this.createChart();
+		this.viewInitialized = true;
 	}
 
 	ngOnChanges()
 	{
-		this.updateChart();
+		if (this.viewInitialized) {
+			this.updateChart();
+		}
 	}
 
 }

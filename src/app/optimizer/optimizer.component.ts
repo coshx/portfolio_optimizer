@@ -15,13 +15,13 @@ import {ResultsTableComponent} from './results-table/results-table.component';
   providers: [OptimizerDataService, HTTP_PROVIDERS]
 })
 export class OptimizerComponent {
-  optimalAllocs: Object;
+  optimalAllocs;
   sharpeRatio: Number;
   // Model of recent button submit
   query: Object = {endDate: "03/20/2016",
            initialInvestment: "1000",
            startDate: "01/01/2012",
-           symbols: ["AAPL", "GOOG", "FB"]};
+           symbols: ["FB", "GOOG", "AAPL"]};
 
   //optimalAllocs = {AAPL: 0.0,
   //                 GOOG: 0.5489549524820141,
@@ -37,13 +37,21 @@ export class OptimizerComponent {
   }
   parseResponse(response: Object) {
     //Parse the new HTTP response from the stream into the local variables
-    this.optimalAllocs = response["optimal_allocations"];
+    this.optimalAllocs = [];
+    for(let k of Object.keys(response["optimal_allocations"]))
+    {
+    var obj = {};
+    obj[k] = response["optimal_allocations"][k];
+    this.optimalAllocs.push(obj);
+    }
+    console.log(JSON.stringify(this.optimalAllocs));
+
     this.sharpeRatio = response["sharpe_ratio"];
     this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio']];
-    for (var key of Object.keys(this.optimalAllocs)) {
+    for (let key of Object.keys(response["optimal_allocations"])) {
       var row = [];
       row.push(key);
-      row.push( (this.optimalAllocs[key] * this.query["initialInvestment"]).toString() );
+      row.push((response["optimal_allocations"][key] * this.query["initialInvestment"]).toString());
       row.push("End Value");
       row.push("");
       this.tableRows.push(row);
@@ -54,7 +62,7 @@ export class OptimizerComponent {
     lastRow.push("end value");
     lastRow.push(this.sharpeRatio.toString());
     this.tableRows.push(lastRow);
-    console.log(this.tableRows);
+    console.log(JSON.stringify(this.tableRows));
   }
 
   onSubmit(value: Object) {
@@ -68,7 +76,6 @@ export class OptimizerComponent {
     this.optimizerDataService.responseSubject.subscribe(
       (x) => {
         //next value
-        console.log(JSON.stringify(x));
         this.parseResponse(x);
       },
       (err) => {
@@ -80,7 +87,8 @@ export class OptimizerComponent {
   }
 
  ngOnInit() {
- 	this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio'],['GOOG','549','600',''],['FB','451','490',''],['AAPL','0','0',''],['Total','1000','1090','2.5']];
+   this.tableRows = [[]];
+   this.optimalAllocs = [];
   this.optimizerDataService.createSubject(this.query);
   this.subscribeToResponse();
  }
