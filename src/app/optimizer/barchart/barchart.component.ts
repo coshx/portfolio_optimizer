@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
 import {OptimizerDataService} from '../optimizer-data.service';
@@ -11,61 +11,156 @@ import {OptimizerDataService} from '../optimizer-data.service';
   styleUrls: ['barchart.component.css']
 })
 
-export class BarchartComponent implements OnInit {
+export class BarchartComponent{
   constructor(private optimizerDataService: OptimizerDataService) {}
 
-  ngOnInit() {
-    var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+  @Input() optimalAllocs;
+  @Input() title;
+  chart;
 
-    var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], .1);
+ 	getPanelBody() {
+		var panelTitleElements = d3.selectAll('.panel-title');
+		for (let i = 0; i < panelTitleElements.length; i++) {
+			for (let j = 0; j < panelTitleElements[i].length; j++) {
+				if ((panelTitleElements[i][j] as any).innerHTML === this.title) {
+					var panelTitleElement = (panelTitleElements[i][j] as any);
+					break;
+				}
+			}
+		}
 
-    var y = d3.scale.linear()
-      .range([height, 0]);
+		var parent = panelTitleElement.parentElement.parentElement;
 
-    var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient('bottom');
+		for (let i = 0; i < parent.childNodes.length; i++) {
+			if (parent.childNodes[i].className === 'panel-body') {
+				var panelBodyElement = parent.childNodes[i];
+			}
+		}
+		return panelBodyElement;
+	}
+	getPanelDimensions() {
+		  var panelBodyElement = this.getPanelBody();
+		  return { width: panelBodyElement.clientWidth, height: panelBodyElement.clientHeight*2 };
+	}
+	getChartElement() {
+		return d3.select(this.getPanelBody()).select('.chart');
+	}
 
-    var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient('left');
+	updateChart()
+	{
+		var margin = { top: 20, right: 30, bottom: 30, left: 40 };
 
-    var chart = d3.select('.chart')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+		var panelDimensions = this.getPanelDimensions();
 
-    d3.tsv('/app/optimizer/barchart/data.tsv', type, function(error, data) {
-      x.domain(data.map(function(d) { return d.letter; }));
-      y.domain([0, d3.max(data, function(d) { return d['frequency']; })]);
+		var width = panelDimensions.width - margin.left - margin.right,
+			height = panelDimensions.height - margin.top - margin.bottom;
 
-      chart.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis);
+		var x = d3.scale.ordinal()
+			.rangeRoundBands([0, width], .1);
 
-      chart.append('g')
-        .attr('class', 'y axis')
-        .call(yAxis);
+		var y = d3.scale.linear()
+			.range([height, 0]);
 
-      chart.selectAll('.bar')
-        .data(data)
-        .enter().append('rect')
-        .attr('class', 'bar')
-        .attr('x', function(d) { return x(d['letter']); })
-        .attr('y', function(d) { return y(d['frequency']); })
-        .attr('height', function(d) { return height - y(d['frequency']); })
-        .attr('width', x.rangeBand());
-    });
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient('bottom');
 
-    function type(d) {
-      d.frequency = +d.frequency; // coerce to number
-      return d;
-    }
-  }
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient('left');
+
+		this.chart = this.getChartElement()
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom)
+			.select('.body')
+			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+		x.domain(this.optimalAllocs.map(function(d) { return Object.keys(d)[0]; }));
+		y.domain([0, d3.max(this.optimalAllocs, function(d) { return parseFloat((d as any)[Object.keys(d)[0]]); })]);
+
+		this.chart.select('.x.axis')
+			.attr('transform', 'translate(0,' + height + ')')
+			.call(xAxis);
+
+		this.chart.select('.y.axis')
+			.call(yAxis);
+
+		this.chart.selectAll('.bar').
+
+		this.chart.selectAll('.bar')
+			.data(this.optimalAllocs)
+			.enter().append('rect')
+			.attr('class', 'bar')
+			.attr('x', function(d) { return x(Object.keys(d)[0]); })
+			.attr('y', function(d) { return y(parseFloat((d as any)[Object.keys(d)[0]])); })
+			.attr('height', function(d) { return height - y(parseFloat((d as any)[Object.keys(d)[0]])); })
+			.attr('width', x.rangeBand())
+			.exit().remove();
+	}
+
+	createChart()
+	{
+		var margin = { top: 20, right: 30, bottom: 30, left: 40 };
+
+		var panelDimensions = this.getPanelDimensions();
+
+		var width = panelDimensions.width - margin.left - margin.right,
+			height = panelDimensions.height - margin.top - margin.bottom;
+
+		var x = d3.scale.ordinal()
+			.rangeRoundBands([0, width], .1);
+
+		var y = d3.scale.linear()
+			.range([height, 0]);
+
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient('bottom');
+
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient('left');
+
+		this.chart = this.getChartElement()
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom)
+			.append('g')
+			.attr('class','body')
+			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+			x.domain(this.optimalAllocs.map(function(d) { return Object.keys(d)[0]; }));
+			y.domain([0, d3.max(this.optimalAllocs, function(d) { return parseFloat((d as any)[Object.keys(d)[0]]); })]);
+
+			this.chart.append('g')
+				.attr('class', 'x axis')
+				.attr('transform', 'translate(0,' + height + ')')
+				.call(xAxis);
+
+			this.chart.append('g')
+				.attr('class', 'y axis')
+				.call(yAxis);
+
+			this.chart.selectAll('.bar')
+				.data(this.optimalAllocs)
+				.enter().append('rect')
+				.attr('class', 'bar')
+				.attr('x', function(d) { return x(Object.keys(d)[0]); })
+				.attr('y', function(d) { return y(parseFloat((d as any)[Object.keys(d)[0]])); })
+				.attr('height', function(d) { return height - y(parseFloat((d as any)[Object.keys(d)[0]])); })
+				.attr('width', x.rangeBand());
+	}
+	onResize()
+	{
+	}
+
+	ngAfterViewInit()
+	{
+		this.createChart();
+	}
+
+	ngOnChanges()
+	{
+		this.updateChart();
+	}
 
 }
