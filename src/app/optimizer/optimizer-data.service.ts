@@ -40,7 +40,6 @@ export class OptimizerDataService {
 
   optimizePortfolio(formData: Object) {
     let url = 'http://stocks.coshx.com/backend';
-    //console.log('form data:', formData);
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
         data => this.responseSubject.next(data.json()),

@@ -17,6 +17,7 @@ import {ResultsTableComponent} from './results-table/results-table.component';
 export class OptimizerComponent {
   optimalAllocs;
   sharpeRatio: Number;
+  trailingDecimals = 4;
   // Model of recent button submit
   query: Object = {endDate: "03/20/2016",
            initialInvestment: "1000",
@@ -44,31 +45,29 @@ export class OptimizerComponent {
     obj[k] = response["optimal_allocations"][k];
     this.optimalAllocs.push(obj);
     }
-    console.log(JSON.stringify(this.optimalAllocs));
 
     this.sharpeRatio = response["sharpe_ratio"];
     this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio']];
     for (let key of Object.keys(response["optimal_allocations"])) {
       var row = [];
       row.push(key);
-      row.push((response["optimal_allocations"][key] * this.query["initialInvestment"]).toString());
-      row.push("End Value");
+      row.push((this.query["initialInvestment"] / Object.keys(response["optimal_allocations"]).length).toFixed(this.trailingDecimals).toString());
+      row.push((response["optimal_allocations"][key] * this.query["initialInvestment"]).toFixed(this.trailingDecimals).toString());
       row.push("");
       this.tableRows.push(row);
     }
     var lastRow = [];
     lastRow.push("Total");
     lastRow.push(this.query["initialInvestment"].toString());
-    lastRow.push("end value");
-    lastRow.push(this.sharpeRatio.toString());
+    lastRow.push(this.query["initialInvestment"].toString());
+    lastRow.push(this.sharpeRatio.toFixed(this.trailingDecimals).toString());
     this.tableRows.push(lastRow);
-    console.log(JSON.stringify(this.tableRows));
   }
 
   onSubmit(value: Object) {
     // Triggered by the submition of the button in the input component
     this.query = value;
-    this.optimizerDataService.subjectChange(value)
+    this.optimizerDataService.subjectChange(value);
   }
 
   subscribeToResponse() {
@@ -82,14 +81,14 @@ export class OptimizerComponent {
         console.log('Response stream error: ' + err);
       },
       () => {
-        console.log('Response stream completed')
+        console.log('Response stream completed');
       });
   }
 
  ngOnInit() {
    this.tableRows = [[]];
    this.optimalAllocs = [];
-  this.optimizerDataService.createSubject(this.query);
-  this.subscribeToResponse();
+   this.optimizerDataService.createSubject(this.query);
+   this.subscribeToResponse();
  }
 }
