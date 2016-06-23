@@ -17,6 +17,7 @@ import {ResultsTableComponent} from './results-table/results-table.component';
 export class OptimizerComponent {
   optimalAllocs: Object;
   sharpeRatio: Number;
+  // Model of recent button submit, may not be necessary to store this at all
   query: Object = {endDate: "03/20/2016",
            initialInvestment: "1000",
            startDate: "01/01/2012",
@@ -30,22 +31,41 @@ export class OptimizerComponent {
   data;
   tableRows;
 
+
   constructor(private optimizerDataService: OptimizerDataService) {
-    optimizerDataService.optimalAllocs$.subscribe();
+
+  }
+  parseResponse(response: Object) {
+    //Parse the new HTTP response from the stream into the local variables
+    this.optimalAllocs = response["optimal_allocations"];
+    this.sharpeRatio = response["sharpe_ratio"];
   }
 
   onSubmit(value: Object) {
+    // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.subjectChange(value)
+  }
+
+  subscribeToResponse() {
+    // Subscribe to the stream that will have HTTP Post responses
+    this.optimizerDataService.responseSubject.subscribe(
+      (x) => {
+        //next value
+        console.log(JSON.stringify(x));
+        this.parseResponse(x);
+      },
+      (err) => {
+        console.log('Response stream error: ' + err);
+      },
+      () => {
+        console.log('Response stream completed')
+      });
   }
 
  ngOnInit() {
  	this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio'],['GOOG','549','600',''],['FB','451','490',''],['AAPL','0','0',''],['Total','1000','1090','2.5']];
   this.optimizerDataService.createSubject(this.query);
-  //   this.optimizerDataService.optimizePortfolio();
+  this.subscribeToResponse();
  }
-
-  // getOptimizationData() {
-  //   this.data = this.optimizerDataService.optimizePortfolio(this.data);
-  // }
 }
