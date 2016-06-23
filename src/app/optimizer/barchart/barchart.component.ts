@@ -47,8 +47,7 @@ export class BarchartComponent{
 		return d3.select(this.getPanelBody()).select('.chart');
 	}
 
-	updateChart()
-	{
+	updateChart(){
 		var margin = { top: 20, right: 30, bottom: 30, left: 40 };
 
 		var panelDimensions = this.getPanelDimensions();
@@ -98,8 +97,7 @@ export class BarchartComponent{
 			.attr('width', x.rangeBand());
 	}
 
-	createChart()
-	{
+	createChart(){
 		var margin = { top: 20, right: 30, bottom: 30, left: 40 };
 
 		var panelDimensions = this.getPanelDimensions();
@@ -149,18 +147,15 @@ export class BarchartComponent{
 				.attr('height', function(d) { return height - y(parseFloat((d as any)[Object.keys(d)[0]])); })
 				.attr('width', x.rangeBand());
 	}
-	onResize()
-	{
+	onResize(){
 	}
 
-	ngAfterViewInit()
-	{
+	ngAfterViewInit(){
 		this.createChart();
 		this.viewInitialized = true;
 	}
 
-	ngOnChanges()
-	{
+	ngOnChanges(){
 		if (this.viewInitialized) {
 			this.updateChart();
 		}
