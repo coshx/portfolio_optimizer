@@ -8,7 +8,10 @@ export class OptimizerDataService {
   // initialInvestment: Number;
   // endValue: Number;
 
-  responseSubject: BehaviorSubject<Object> = new BehaviorSubject("default");
+  responseSubject: BehaviorSubject<Object> = new BehaviorSubject(
+    {"cumulative_returns":1.6650534305121512,
+     "optimal_allocations":{"FB":0.4510450475179859,"GOOG":0.5489549524820141,"AAPL":0},
+     "sharpe_ratio":0.5730332517669126});
 
   subject: BehaviorSubject<Object>;
 

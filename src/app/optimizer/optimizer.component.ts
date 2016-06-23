@@ -17,7 +17,7 @@ import {ResultsTableComponent} from './results-table/results-table.component';
 export class OptimizerComponent {
   optimalAllocs: Object;
   sharpeRatio: Number;
-  // Model of recent button submit, may not be necessary to store this at all
+  // Model of recent button submit
   query: Object = {endDate: "03/20/2016",
            initialInvestment: "1000",
            startDate: "01/01/2012",
@@ -39,6 +39,22 @@ export class OptimizerComponent {
     //Parse the new HTTP response from the stream into the local variables
     this.optimalAllocs = response["optimal_allocations"];
     this.sharpeRatio = response["sharpe_ratio"];
+    this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio']];
+    for (var key of Object.keys(this.optimalAllocs)) {
+      var row = [];
+      row.push(key);
+      row.push( (this.optimalAllocs[key] * this.query["initialInvestment"]).toString() );
+      row.push("End Value");
+      row.push("");
+      this.tableRows.push(row);
+    }
+    var lastRow = [];
+    lastRow.push("Total");
+    lastRow.push(this.query["initialInvestment"].toString());
+    lastRow.push("end value");
+    lastRow.push(this.sharpeRatio.toString());
+    this.tableRows.push(lastRow);
+    console.log(this.tableRows);
   }
 
   onSubmit(value: Object) {
