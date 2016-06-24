@@ -13,18 +13,18 @@ export class OptimizerDataService {
      "optimal_allocations":{"FB":0.4510450475179859,"GOOG":0.5489549524820141,"AAPL":0},
      "sharpe_ratio":0.5730332517669126});
 
-  subject: BehaviorSubject<Object>;
+  formDataSubject: BehaviorSubject<Object>;
 
   constructor(private http: Http) {
 
   }
 
-  createSubject(model: Object) {
-    this.subject = new BehaviorSubject(model);
-    this.subject.subscribe(
-      (x) => {
+  createFormDataSubject(model: Object) {
+    this.formDataSubject = new BehaviorSubject(model);
+    this.formDataSubject.subscribe(
+      (query) => {
         //next value
-        this.optimizePortfolio(x);
+        this.optimizePortfolio(query);
       },
       (err) => {
         console.log('Optimizer Component model error: ' + err);
@@ -34,8 +34,8 @@ export class OptimizerDataService {
       });
   }
 
-  subjectChange(model: Object) {
-    this.subject.next(model);
+  formDataSubjectChange(model: Object) {
+    this.formDataSubject.next(model);
   }
 
   optimizePortfolio(formData: Object) {
