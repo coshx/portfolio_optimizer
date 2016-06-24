@@ -41,11 +41,11 @@ export class OptimizerComponent {
     
     //Format optimalAllocs
     this.optimalAllocs = [];
+    let keys: Array<string> = Object.keys(response["optimal_allocations"]).sort()
     let obj: Object;
-    for(let k of Object.keys(response["optimal_allocations"]))
-    {
+    for(let key of keys) {
     obj = {};
-    obj[k] = response["optimal_allocations"][k];
+    obj[key] = response["optimal_allocations"][key];
     this.optimalAllocs.push(obj);
     }
 
@@ -53,10 +53,10 @@ export class OptimizerComponent {
     this.sharpeRatio = response["sharpe_ratio"];
     this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio']];
     let row: Array<string>;
-    for (let key of Object.keys(response["optimal_allocations"])) {
+    for (let key of keys) {
       row = [];
       row.push(key);
-      row.push((this.query["initialInvestment"] / Object.keys(response["optimal_allocations"]).length).toFixed(this.trailingDecimals).toString());
+      row.push( (this.query["initialInvestment"] / keys.length).toFixed(this.trailingDecimals).toString() );
       row.push((response["optimal_allocations"][key] * this.query["initialInvestment"]).toFixed(this.trailingDecimals).toString());
       row.push("");
       this.tableRows.push(row);
