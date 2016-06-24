@@ -93,7 +93,7 @@ export class OptimizerComponent {
   ngOnInit() {
     this.tableRows = [[]];
     this.optimalAllocs = [];
-    this.optimizerDataService.createFormDataSubject(this.query);
+    this.optimizerDataService.prepareFormDataSubject(this.query);
     this.subscribeToResponse();
  }
 }

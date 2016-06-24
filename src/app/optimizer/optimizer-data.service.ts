@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Subject, Observable, BehaviorSubject} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 
 @Injectable()
 export class OptimizerDataService {
@@ -8,19 +8,15 @@ export class OptimizerDataService {
   // initialInvestment: Number;
   // endValue: Number;
 
-  responseSubject: BehaviorSubject<Object> = new BehaviorSubject(
-    {"cumulative_returns":1.6650534305121512,
-     "optimal_allocations":{"FB":0.4510450475179859,"GOOG":0.5489549524820141,"AAPL":0},
-     "sharpe_ratio":0.5730332517669126});
+  responseSubject: Subject<Object> = new Subject();
 
-  formDataSubject: BehaviorSubject<Object>;
+  formDataSubject: Subject<Object> = new Subject();
 
   constructor(private http: Http) {
 
   }
 
-  createFormDataSubject(model: Object) {
-    this.formDataSubject = new BehaviorSubject(model);
+  prepareFormDataSubject(model: Object) {
     this.formDataSubject.subscribe(
       (query) => {
         //next value
@@ -32,6 +28,7 @@ export class OptimizerDataService {
       () => {
         console.log('Optimizer Component model stream completed');
       });
+    this.formDataSubject.next(model);
   }
 
   formDataSubjectChange(model: Object) {
