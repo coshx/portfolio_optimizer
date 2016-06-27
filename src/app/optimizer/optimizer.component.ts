@@ -44,9 +44,9 @@ export class OptimizerComponent {
     let keys: Array<string> = Object.keys(response["optimal_allocations"]).sort()
     let obj: Object;
     for(let key of keys) {
-    obj = {};
-    obj[key] = response["optimal_allocations"][key];
-    this.optimalAllocs.push(obj);
+      obj = {};
+      obj[key] = response["optimal_allocations"][key];
+      this.optimalAllocs.push(obj);
     }
 
     //Format tableRows
