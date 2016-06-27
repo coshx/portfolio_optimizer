@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Subject, Observable} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 
 @Injectable()
 export class OptimizerDataService {
@@ -8,40 +8,39 @@ export class OptimizerDataService {
   // initialInvestment: Number;
   // endValue: Number;
 
-  // Observable sources
-  private optimalAllocsSource = new Subject<Object>();
-  private sharpeRatioSource = new Subject<number>();
+  responseSubject: Subject<Object> = new Subject();
 
-  // Observable streams
-  optimalAllocs$ = this.optimalAllocsSource.asObservable();
-  sharpeRatio$ = this.sharpeRatioSource.asObservable();
-
-  // Message alerts
-  announceOptimalAllocs(optimalAllocs: Object) {
-    this.optimalAllocsSource.next(optimalAllocs);
-  }
-
-  announceSharpeRatio(sharpeRatio: number) {
-    this.sharpeRatioSource.next(sharpeRatio);
-  }
-
-  response;
+  formDataSubject: Subject<Object> = new Subject();
 
   constructor(private http: Http) {
 
   }
 
+  prepareFormDataSubject(model: Object) {
+    this.formDataSubject.subscribe(
+      (query) => {
+        //next value
+        this.optimizePortfolio(query);
+      },
+      (err) => {
+        console.log('Optimizer Component model error: ' + err);
+      },
+      () => {
+        console.log('Optimizer Component model stream completed');
+      });
+    this.formDataSubject.next(model);
+  }
+
+  formDataSubjectChange(model: Object) {
+    this.formDataSubject.next(model);
+  }
+
   optimizePortfolio(formData: Object) {
     let url = 'http://stocks.coshx.com/backend';
-    console.log('form data:', formData);
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
-        data => this.response = data.json(),
+        data => this.responseSubject.next(data.json()),
         err => console.log(err)
       );
   }
-
-  private optimizedPortfolio = new Subject<Object>();
-  optimizedPortfolio$ = this.optimizedPortfolio.asObservable();
-
 }
