@@ -72,7 +72,7 @@ export class OptimizerComponent {
   onSubmit(value: Object) {
     // Triggered by the submition of the button in the input component
     this.query = value;
-    this.optimizerDataService.formDataSubjectChange(value);
+    this.optimizerDataService.formDataSubject.next(value);
   }
 
   subscribeToResponse() {
@@ -91,9 +91,12 @@ export class OptimizerComponent {
   }
 
   ngOnInit() {
-    this.tableRows = [[]];
-    this.optimalAllocs = [];
-    this.optimizerDataService.prepareFormDataSubject(this.query);
+    let seedResponse = {"cumulative_returns":1.6650534305121512,
+                        "optimal_allocations":{"FB":0.4510450475179859,"GOOG":0.5489549524820141,"AAPL":0},
+                        "sharpe_ratio":0.5730332517669126}
+    // Seed optimalAllocs and tableRows, so that the chart and table have values
+    //  without having to wait for a HTTP Post reponse
+    this.parseResponse(seedResponse);
     this.subscribeToResponse();
  }
 }
