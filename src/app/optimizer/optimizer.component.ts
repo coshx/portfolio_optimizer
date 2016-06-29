@@ -38,10 +38,10 @@ export class OptimizerComponent {
   }
   parseResponse(response: Object) {
     //Parse the new HTTP response from the stream into the local variables
+    let keys: Array<string> = Object.keys(response["optimal_allocations"]).sort()
     
     //Format optimalAllocs
     this.optimalAllocs = [];
-    let keys: Array<string> = Object.keys(response["optimal_allocations"]).sort()
     let obj: Object;
     for(let key of keys) {
       obj = {};
@@ -95,7 +95,7 @@ export class OptimizerComponent {
                         "optimal_allocations":{"FB":0.4510450475179859,"GOOG":0.5489549524820141,"AAPL":0},
                         "sharpe_ratio":0.5730332517669126}
     // Seed optimalAllocs and tableRows, so that the chart and table have values
-    //  without having to wait for a HTTP Post reponse
+    //  without having to wait for a HTTP Post response
     this.parseResponse(seedResponse);
     this.subscribeToResponse();
  }
