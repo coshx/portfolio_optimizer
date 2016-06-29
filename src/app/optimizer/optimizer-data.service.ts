@@ -13,26 +13,17 @@ export class OptimizerDataService {
   formDataSubject: Subject<Object> = new Subject();
 
   constructor(private http: Http) {
-
-  }
-
-  prepareFormDataSubject(model: Object) {
     this.formDataSubject.subscribe(
       (query) => {
         //next value
         this.optimizePortfolio(query);
       },
       (err) => {
-        console.log('Optimizer Component model error: ' + err);
+        console.log('Form data stream error: ' + err);
       },
       () => {
-        console.log('Optimizer Component model stream completed');
+        console.log('Form data stream completed');
       });
-    this.formDataSubject.next(model);
-  }
-
-  formDataSubjectChange(model: Object) {
-    this.formDataSubject.next(model);
   }
 
   optimizePortfolio(formData: Object) {
