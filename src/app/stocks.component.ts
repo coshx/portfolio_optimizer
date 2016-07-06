@@ -9,7 +9,8 @@ import { OptimizerComponent } from './optimizer/optimizer.component';
   selector: 'stocks-app',
   templateUrl: 'stocks.component.html',
   styleUrls: ['stocks.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES],
+  precompile: [OptimizerComponent]
 })
 
 export class StocksAppComponent {
