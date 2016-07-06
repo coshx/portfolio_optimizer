@@ -2,7 +2,7 @@ import { provideRouter, RouterConfig } from '@angular/router';
 
 import { OptimizerComponent } from './optimizer/optimizer.component';
 
-export const routes = [
+export const routes: RouterConfig = [
   { path: '', redirectTo: '/optimizer', pathMatch: 'full'},	
   { path: 'optimizer', component: OptimizerComponent }
 ];
