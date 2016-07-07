@@ -23,6 +23,7 @@ const barrels: string[] = [
   '@angular/router-deprecated',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
+  '@angular/forms',
 
   // Thirdparty barrels.q
   'rxjs',

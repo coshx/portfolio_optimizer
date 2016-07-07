@@ -1,12 +1,13 @@
 import {Injectable, Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {Http, HTTP_PROVIDERS} from '@angular/http';
-import {
+/*import {
   FormBuilder,
   Validators,
   Control,
   ControlGroup,
-  FORM_DIRECTIVES} from '@angular/common';
-
+  FORM_DIRECTIVES,
+   } from '@angular/common';*/
+import {NgForm} from '@angular/forms';
+import {FormData} from './formdata';
 import {SymbolsValidator} from './symbols.validator';
 import {OptimizerDataService} from '../optimizer-data.service';
 
@@ -14,25 +15,19 @@ import {OptimizerDataService} from '../optimizer-data.service';
   moduleId: module.id,
   selector: 'user-input',
   templateUrl: 'input.component.html',
-  styleUrls: ['input.component.css'],
-  providers: [HTTP_PROVIDERS],
-  directives: [FORM_DIRECTIVES]
+  styleUrls: ['input.component.css']
 })
 
 @Injectable()
 export class InputComponent implements OnInit {
-  response;
-  form: ControlGroup;
+  
+  @Output() onSubmit = new EventEmitter();
+  x: number = 0;
 
-  symbols: Control;
-  startDate: Control;
-  endDate: Control;
-  initialInvestment: Control;
+  model = new FormData('AAPL, GOOG, FB', '01/01/2012', '03/20/2016', '1000');
 
-  @Output() onSubmit = new EventEmitter<ControlGroup>();
-
-  constructor(public http: Http, private builder: FormBuilder, private optimizerDataService: OptimizerDataService) {
-    this.symbols = new Control(
+  constructor() {//public http: Http, private builder: FormBuilder, private optimizerDataService: OptimizerDataService) {
+    /*this.symbols = new Control(
       'AAPL, GOOG, FB',
       Validators.compose([Validators.required,
                           SymbolsValidator.tooFewSymbols])
@@ -60,15 +55,22 @@ export class InputComponent implements OnInit {
       startDate: this.startDate,
       endDate: this.endDate,
       initialInvestment: this.initialInvestment
-    });
+    });*/
+    //this.model = new FormData('AAPL, GOOG, FB', '01/01/2012', '03/20/2016', '1000')
+  }
+  submitData() {
+    let query = {symbols: [], startDate: '', endDate: '', initialInvestment: ''};
+    // Turn string of stocks, into array of strings
+    // ex: 'AAPL, GOOG, FB' --> ['AAPL', 'GOOG', 'FB']
+    query.symbols = this.model.symbols.replace(/ /g, '').split(',');
+    query.startDate = this.model.startDate;
+    query.endDate = this.model.endDate;
+    query.initialInvestment = this.model.initialInvestment;
+
+    this.onSubmit.emit(query);
   }
 
-  submitData(inputForm: ControlGroup) {
-    inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.onSubmit.emit(inputForm.value)
-  }
-
-  get diagnostic() { return JSON.stringify(this.response); }
+  get diagnostic() { return JSON.stringify(this.model); }
 
   ngOnInit() {
   }
