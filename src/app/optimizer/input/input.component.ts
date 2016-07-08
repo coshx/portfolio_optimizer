@@ -13,7 +13,7 @@ import {SymbolsValidator} from './symbols.validator';
 @Injectable()
 export class InputComponent implements OnInit {
   
-  @Output() onSubmit = new EventEmitter();
+  @Output() submitData = new EventEmitter();
 
   optimizeForm: FormGroup;
 
@@ -39,7 +39,7 @@ export class InputComponent implements OnInit {
         )
     });
   }
-  submitData(form) {
+  onSubmit(form) {
     let query = {symbols: [], startDate: '', endDate: '', initialInvestment: ''};
     // Turn string of stocks, into array of strings
     // ex: 'AAPL, GOOG, FB' --> ['AAPL', 'GOOG', 'FB']
@@ -50,7 +50,7 @@ export class InputComponent implements OnInit {
     query.initialInvestment = form.initialInvestment;
     this.diagnosticData = query;
 
-    this.onSubmit.emit(query);
+    this.submitData.emit(query);
   }
 
   get diagnostic() { return JSON.stringify(this.diagnosticData); }

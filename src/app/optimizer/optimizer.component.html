@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4">
-    <user-input (onSubmit)="onSubmit($event)"></user-input>
+    <user-input (submitData)="submitData($event)"></user-input>
   </div>
   <div class="col-md-8">
     <barchart [optimalAllocs]="optimalAllocs" [title]="'Optimal Allocations Chart'"></barchart>

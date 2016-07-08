@@ -5,7 +5,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
-        <form [formGroup]="optimizeForm" (ngSubmit)="submitData(optimizeForm.value)">
+        <form [formGroup]="optimizeForm" (ngSubmit)="onSubmit(optimizeForm.value)">
           <!-- {{diagnostic}} -->
           <div class="form-group">
             <label for="symbols">Ticker symbols</label>
