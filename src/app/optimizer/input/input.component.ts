@@ -17,6 +17,8 @@ export class InputComponent implements OnInit {
 
   optimizeForm: FormGroup;
 
+  diagnosticData;
+
   constructor() {
     this.optimizeForm = new FormGroup({
       symbols: new FormControl(
@@ -46,11 +48,12 @@ export class InputComponent implements OnInit {
     query.startDate = form.startDate;
     query.endDate = form.endDate;
     query.initialInvestment = form.initialInvestment;
+    this.diagnosticData = query;
 
     this.onSubmit.emit(query);
   }
 
-  get diagnostic() { return JSON.stringify(this.optimizeForm); }
+  get diagnostic() { return JSON.stringify(this.diagnosticData); }
 
   ngOnInit() {
   }
