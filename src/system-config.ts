@@ -20,9 +20,9 @@ const barrels: string[] = [
   '@angular/compiler',
   '@angular/http',
   '@angular/router',
-  '@angular/router-deprecated',
   '@angular/platform-browser',
   '@angular/platform-browser-dynamic',
+  '@angular/forms',
 
   // Thirdparty barrels.q
   'rxjs',

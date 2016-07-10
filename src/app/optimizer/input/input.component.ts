@@ -1,74 +1,59 @@
 import {Injectable, Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {Http, HTTP_PROVIDERS} from '@angular/http';
-import {
-  FormBuilder,
-  Validators,
-  Control,
-  ControlGroup,
-  FORM_DIRECTIVES} from '@angular/common';
-
+import {FormGroup, FormControl, Validators, REACTIVE_FORM_DIRECTIVES} from '@angular/forms';
 import {SymbolsValidator} from './symbols.validator';
-import {OptimizerDataService} from '../optimizer-data.service';
 
 @Component({
   moduleId: module.id,
   selector: 'user-input',
   templateUrl: 'input.component.html',
   styleUrls: ['input.component.css'],
-  providers: [HTTP_PROVIDERS],
-  directives: [FORM_DIRECTIVES]
+  directives: [REACTIVE_FORM_DIRECTIVES]
 })
 
 @Injectable()
 export class InputComponent implements OnInit {
-  response;
-  form: ControlGroup;
+  
+  @Output() submitData = new EventEmitter();
 
-  symbols: Control;
-  startDate: Control;
-  endDate: Control;
-  initialInvestment: Control;
+  optimizeForm: FormGroup;
 
-  @Output() onSubmit = new EventEmitter<ControlGroup>();
+  diagnosticData;
 
-  constructor(public http: Http, private builder: FormBuilder, private optimizerDataService: OptimizerDataService) {
-    this.symbols = new Control(
-      'AAPL, GOOG, FB',
-      Validators.compose([Validators.required,
-                          SymbolsValidator.tooFewSymbols])
-    );
-
-    this.startDate = new Control(
-      '01/01/2012',
-      Validators.compose([Validators.required,
-                          Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
-    );
-
-    this.endDate = new Control(
-      '03/20/2016',
-      Validators.compose([Validators.required,
-                          Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
-    );
-
-    this.initialInvestment = new Control(
-      '1000',
-      Validators.compose([Validators.required])
-    );
-
-    this.form = builder.group({
-      symbols: this.symbols,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      initialInvestment: this.initialInvestment
+  constructor() {
+    this.optimizeForm = new FormGroup({
+      symbols: new FormControl(
+        'AAPL, GOOG, FB', 
+        Validators.compose([Validators.required, SymbolsValidator.tooFewSymbols])
+        ),
+      startDate: new FormControl(
+        '01/01/2012',
+        Validators.compose([Validators.required, Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
+        ),
+      endDate: new FormControl(
+        '03/20/2016',
+        Validators.compose([Validators.required, Validators.pattern('[0-9]{2}\/[0-9]{2}\/[0-9]{4}')])
+        ),
+      initialInvestment: new FormControl(
+        '1000',
+        Validators.compose([Validators.required])
+        )
     });
   }
+  onSubmit(form) {
+    let query = {symbols: [], startDate: '', endDate: '', initialInvestment: ''};
+    // Turn string of stocks, into array of strings
+    // ex: 'AAPL, GOOG, FB' --> ['AAPL', 'GOOG', 'FB']
+    // This is the format that the backend requires
+    query.symbols = form.symbols.replace(/ /g, '').split(',');
+    query.startDate = form.startDate;
+    query.endDate = form.endDate;
+    query.initialInvestment = form.initialInvestment;
+    this.diagnosticData = query;
 
-  submitData(inputForm: ControlGroup) {
-    inputForm.value.symbols = this.symbols.value.replace(/ /g, '').split(',');
-    this.onSubmit.emit(inputForm.value)
+    this.submitData.emit(query);
   }
 
-  get diagnostic() { return JSON.stringify(this.response); }
+  get diagnostic() { return JSON.stringify(this.diagnosticData); }
 
   ngOnInit() {
   }
