@@ -8,19 +8,15 @@ import {
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { provide } from '@angular/core';
-import { Router } from '@angular/router';
-import { ROUTER_PRIMARY_COMPONENT, RouteRegistry } from '@angular/router-deprecated';
-import { RootRouter } from '@angular/router-deprecated/src/router';
+import { Router, PRIMARY_OUTLET } from '@angular/router';
 
 import { StocksAppComponent } from './stocks.component';
 
 beforeEachProviders(() => [
   StocksAppComponent,
   Location,
-  RouteRegistry,
   provide(Location, {useClass: SpyLocation}),
-  provide(ROUTER_PRIMARY_COMPONENT, {useValue: StocksAppComponent}),
-  provide(Router, {useClass: RootRouter})
+  provide(PRIMARY_OUTLET, {useValue: StocksAppComponent})
 ]);
 
 // Test just component methods and attributes

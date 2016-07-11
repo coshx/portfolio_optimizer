@@ -1,4 +1,4 @@
-import {Control} from '@angular/common';
+import {AbstractControl} from '@angular/forms';
 
 interface ValidationResult {
   [key: string]: boolean;
@@ -6,7 +6,7 @@ interface ValidationResult {
 
 export class SymbolsValidator {
 
-  static tooFewSymbols(control: Control): ValidationResult {
+  static tooFewSymbols(control: AbstractControl): ValidationResult {
     let separated = control.value.split(',');
     if (separated.length < 2 || separated[1].length < 2) {
       return {'isCommaSeparated': true};

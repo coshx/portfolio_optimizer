@@ -69,7 +69,7 @@ export class OptimizerComponent {
     this.tableRows.push(lastRow);
   }
 
-  onSubmit(value: Object) {
+  submitData(value: Object) {
     // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);

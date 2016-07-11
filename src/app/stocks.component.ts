@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { OptimizerComponent } from './optimizer/optimizer.component';
 
@@ -9,16 +9,11 @@ import { OptimizerComponent } from './optimizer/optimizer.component';
   selector: 'stocks-app',
   templateUrl: 'stocks.component.html',
   styleUrls: ['stocks.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES],
+  precompile: [OptimizerComponent]
 })
-@Routes([
-  {path: '/optimizer', component: OptimizerComponent}
-])
-export class StocksAppComponent implements OnInit {
-  constructor(private router: Router) {}
-  siteName = 'Coshx Finance Tools';
 
-  ngOnInit() {
-    this.router.navigate(['/optimizer']);
-  }
+export class StocksAppComponent {
+  constructor() {}
+  siteName = 'Coshx Finance Tools';
 }
