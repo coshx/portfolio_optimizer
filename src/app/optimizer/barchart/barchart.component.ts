@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, AfterViewInit, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
 import {OptimizerDataService} from '../optimizer-data.service';
@@ -70,17 +70,11 @@ export class BarchartComponent{
     d3.select('svg').remove();
   }
 
-  ngAfterViewInit(){
-    this.create();
-    this.viewInitialized = true;
-  }
-
   ngOnChanges(){
-    if (this.viewInitialized) {
-      this.removeOldChart();
-      this.create();
-    }
-    
+    // Called on changes to the bindings
+    // At the very beginning when the bindings are first specified, this counts as a change
+    this.removeOldChart();
+    this.create();
   }
 
 }
