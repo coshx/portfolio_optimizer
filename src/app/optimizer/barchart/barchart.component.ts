@@ -20,9 +20,9 @@ export class BarchartComponent{
   viewInitialized: boolean = false;
 
   create() {
-    let w = document.getElementsByClassName("chart")[0].clientWidth;
+    let container = document.getElementsByClassName("chart")[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = w - margin.left - margin.right,
+    width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
 
     let x = d3.scale.ordinal()
@@ -44,18 +44,6 @@ export class BarchartComponent{
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    /*
-    d3.select("div.chart")
-      .append("div")
-      .classed("svg-container", true);
-
-    let svg = d3.select("div.svg-container").append("svg")
-      //responsive SVG needs these 2 attributes and no width and height attr
-      .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 " + width + " " + height)
-      //class to make it responsive
-      .classed("svg-content-responsive", true);*/
 
     x.domain(this.optimalAllocs.map(function(d) { return d.name; }));
     y.domain([0, d3.max(this.optimalAllocs, function(d) { return d.value; })]);
@@ -80,10 +68,6 @@ export class BarchartComponent{
   }
   removeOldChart() {
     d3.select('svg').remove();
-  }
-
-  onResize(){
-
   }
 
   ngAfterViewInit(){
