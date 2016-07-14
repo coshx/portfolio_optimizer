@@ -45,7 +45,8 @@ export class OptimizerComponent {
     let obj: Object;
     for(let key of keys) {
       obj = {};
-      obj[key] = response["optimal_allocations"][key];
+      obj["name"] = key;
+      obj["value"] = response["optimal_allocations"][key];
       this.optimalAllocs.push(obj);
     }
 
