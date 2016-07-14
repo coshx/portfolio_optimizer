@@ -32,7 +32,7 @@
           </div>
 
           <button type="submit" [disabled]="!optimizeForm.valid" class="btn btn-primary">Optimize</button>
-
+          <img *ngIf="loading > 0" src="loading.gif" alt="Loading..." class="loading">
         </form>
         </div>
       </div>
