@@ -1,9 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
-import {OptimizerDataService} from '../optimizer-data.service';
-
-
 @Component({
   moduleId: module.id,
   selector: 'barchart',
@@ -11,15 +8,13 @@ import {OptimizerDataService} from '../optimizer-data.service';
   styleUrls: ['barchart.component.css']
 })
 
-
 export class BarchartComponent{
-  constructor(private optimizerDataService: OptimizerDataService) {}
+  constructor() {}
 
   @Input() optimalAllocs: Array<any>;
   @Input() title: string;
-  viewInitialized: boolean = false;
 
-  create() {
+  createChart() {
     let container = document.getElementsByClassName("chart")[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
@@ -66,7 +61,10 @@ export class BarchartComponent{
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value); });
   }
+
   removeOldChart() {
+    // If svg element exists, remove it
+    // If it doesn't, nothing happens
     d3.select('svg').remove();
   }
 
@@ -74,7 +72,7 @@ export class BarchartComponent{
     // Called on changes to the bindings
     // At the very beginning when the bindings are first specified, this counts as a change
     this.removeOldChart();
-    this.create();
+    this.createChart();
   }
 
 }
