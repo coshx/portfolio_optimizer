@@ -43,7 +43,8 @@ class MainHandler(tornado.web.RequestHandler):
 def make_app():
     tornado.options.parse_command_line()
     return tornado.web.Application([
-        (r"/", MainHandler)
+        (r"/", MainHandler),
+        (r"/backend", MainHandler)
     ])
 
 
