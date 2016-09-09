@@ -30,8 +30,10 @@ def get_data(params):
 
 def hit_quandl(symbol, start, end):
     """Gets adjusted close data for a stock."""
+    import os
+    quandl_token = os.environ['QUANDL_TOKEN']
     price = Quandl.get("YAHOO/{}.6".format(symbol), trim_start=start,
-                       trim_end=end, authtoken='26J-ZYBKTwxxap4xy1-T')
+                       trim_end=end, authtoken=quandl_token)
     return price.rename(columns={'Adjusted Close': symbol})
 
 
