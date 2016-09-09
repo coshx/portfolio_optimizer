@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Subject} from 'rxjs/Rx';
+import {environment} from '../';
 
 @Injectable()
 export class OptimizerDataService {
@@ -27,7 +28,15 @@ export class OptimizerDataService {
   }
 
   optimizePortfolio(formData: Object) {
-    let url = 'http://stocks.coshx.com/backend';
+    let url;
+    if (environment.production) {
+      url = 'http://stocks.coshx.com/backend';
+      console.log('In production', url);
+    } else {
+      url = 'http://localhost:8000/backend';
+      console.log('In development', url);
+    }
+
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
         data => this.responseSubject.next(data.json()),
