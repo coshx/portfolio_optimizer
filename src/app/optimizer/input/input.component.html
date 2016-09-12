@@ -31,11 +31,11 @@
             <div [hidden]="optimizeForm.controls['initialInvestment'].valid || optimizeForm.controls['initialInvestment'].pristine" class="alert alert-danger">Enter an initial investment in dollars.</div>
           </div>
 
-          <div *ngIf="loading <= 0">
+          <div [hidden]="loading > 0">
             <button type="submit" [disabled]="!optimizeForm.valid" class="btn btn-primary">Optimize</button>
           </div>
-          <div *ngIf="loading > 0">
-            <img *ngIf="loading > 0" src="loading.gif" alt="Loading..." class="loading">
+          <div [hidden]="loading <= 0">
+            <img src="loading.gif" alt="Loading..." class="loading">
           </div>
         </form>
         </div>
