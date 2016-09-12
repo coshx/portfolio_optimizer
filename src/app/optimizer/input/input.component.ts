@@ -1,4 +1,4 @@
-import {Injectable, Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Injectable, Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, Validators, REACTIVE_FORM_DIRECTIVES} from '@angular/forms';
 import {SymbolsValidator} from './symbols.validator';
 
@@ -12,8 +12,9 @@ import {SymbolsValidator} from './symbols.validator';
 
 @Injectable()
 export class InputComponent implements OnInit {
-  
+
   @Output() submitData = new EventEmitter();
+  @Input() loading: number;
 
   optimizeForm: FormGroup;
 
@@ -22,7 +23,7 @@ export class InputComponent implements OnInit {
   constructor() {
     this.optimizeForm = new FormGroup({
       symbols: new FormControl(
-        'AAPL, GOOG, FB', 
+        'AAPL, GOOG, FB',
         Validators.compose([Validators.required, SymbolsValidator.tooFewSymbols])
         ),
       startDate: new FormControl(

@@ -32,9 +32,11 @@ export class OptimizerComponent {
   //2D array of strings
   tableRows: Array<Array<string>>;
 
+  loading: number;
+
 
   constructor(private optimizerDataService: OptimizerDataService) {
-
+    this.loading = 0;
   }
   parseResponse(response: Object) {
     //Parse the new HTTP response from the stream into the local variables
@@ -74,6 +76,7 @@ export class OptimizerComponent {
     // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);
+    this.loading++;
   }
 
   subscribeToResponse() {
@@ -82,9 +85,15 @@ export class OptimizerComponent {
       (response) => {
         //next value
         this.parseResponse(response);
+        this.loading--;
       },
       (err) => {
         console.log('Response stream error: ' + err);
+        this.loading--;
+        // We got an error, so this subject will be terminated
+        // But we still want to get successful HTTP responses, so let's make a new subject and subscribe to it
+        this.optimizerDataService.resetResponseSubject();
+        this.subscribeToResponse();
       },
       () => {
         console.log('Response stream completed');
