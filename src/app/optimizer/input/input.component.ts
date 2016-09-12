@@ -12,7 +12,7 @@ import {SymbolsValidator} from './symbols.validator';
 
 @Injectable()
 export class InputComponent implements OnInit {
-  
+
   @Output() submitData = new EventEmitter();
   @Input() loading: number;
 
@@ -23,7 +23,7 @@ export class InputComponent implements OnInit {
   constructor() {
     this.optimizeForm = new FormGroup({
       symbols: new FormControl(
-        'AAPL, GOOG, FB', 
+        'AAPL, GOOG, FB',
         Validators.compose([Validators.required, SymbolsValidator.tooFewSymbols])
         ),
       startDate: new FormControl(
