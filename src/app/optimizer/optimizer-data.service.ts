@@ -13,6 +13,11 @@ export class OptimizerDataService {
 
   formDataSubject: Subject<Object> = new Subject();
 
+  resetResponseSubject() {
+    //kinda hacky
+    this.responseSubject = new Subject();
+  }
+
   constructor(private http: Http) {
     this.formDataSubject.subscribe(
       (query) => {
@@ -40,7 +45,7 @@ export class OptimizerDataService {
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
         data => this.responseSubject.next(data.json()),
-        err => console.log(err)
+        err => this.responseSubject.error(err)//console.log("Hello" + err)
       );
   }
 }
