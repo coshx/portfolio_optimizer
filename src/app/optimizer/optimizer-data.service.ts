@@ -13,6 +13,11 @@ export class OptimizerDataService {
 
   formDataSubject: Subject<Object> = new Subject();
 
+  resetResponseSubject() {
+    //kinda hacky
+    this.responseSubject = new Subject();
+  }
+
   constructor(private http: Http) {
     this.formDataSubject.subscribe(
       (query) => {
@@ -31,16 +36,14 @@ export class OptimizerDataService {
     let url;
     if (environment.production) {
       url = 'http://stocks.coshx.com/backend';
-      console.log('In production', url);
     } else {
-      url = 'http://localhost:8000/backend';
-      console.log('In development', url);
+      url = 'http://localhost:8000/';
     }
 
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
         data => this.responseSubject.next(data.json()),
-        err => console.log(err)
+        err => this.responseSubject.error(err)//console.log("Hello" + err)
       );
   }
 }
