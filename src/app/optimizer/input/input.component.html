@@ -31,11 +31,14 @@
             <div [hidden]="optimizeForm.controls['initialInvestment'].valid || optimizeForm.controls['initialInvestment'].pristine" class="alert alert-danger">Enter an initial investment in dollars.</div>
           </div>
 
-          <div [hidden]="loading > 0">
-            <button type="submit" [disabled]="!optimizeForm.valid" class="btn btn-primary">Optimize</button>
-          </div>
-          <div [hidden]="loading <= 0">
-            <img src="loading.gif" alt="Loading..." class="loading">
+          <div>
+            <button type="submit" [disabled]="!optimizeForm.valid" class="btn btn-primary">
+              <div [hidden]="loading > 0">Optimize</div>
+              <div [hidden]="loading <= 0">
+                <!-- <img src="loading.gif" alt="Loading..." class="loading"> -->
+                <div class="spinner"></div>
+              </div>
+            </button>
           </div>
         </form>
         </div>
