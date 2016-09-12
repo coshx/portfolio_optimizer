@@ -37,7 +37,7 @@ export class OptimizerDataService {
     if (environment.production) {
       url = 'http://stocks.coshx.com/backend';
     } else {
-      url = 'http://localhost:8000/backend';
+      url = 'http://localhost:8000/';
     }
 
     return this.http.post(url, JSON.stringify(formData))
