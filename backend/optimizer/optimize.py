@@ -1,6 +1,7 @@
 """Find allocations that maximize Sharpe ratio and return them."""
 
 import numpy as np
+import pandas as pd
 import scipy.optimize as spo
 
 
@@ -89,7 +90,7 @@ def optimize_allocations(prices):
     return result['x']
 
 
-def optimize_portfolio(prices):
+def optimize_portfolio(prices, prices_SPY):
     """Simulate and optimize portfolio allocations."""
     # Get optimal allocations
     prices = prices.reindex_axis(sorted(prices.columns), axis=1)
@@ -98,29 +99,31 @@ def optimize_portfolio(prices):
     allocs = allocs / np.sum(allocs)
 
     # Get daily portfolio value (already normalized since we use default start_val=1.0)
-    port_val = get_portfolio_value(prices, allocs)
+    port_val = get_portfolio_value(prices, allocs).rename("Portfolio")
 
     # Get portfolio statistics (note: std_daily_ret = volatility)
     cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(port_val)
 
     ## To compare daily portfolio value with normalized SPY:
-    # normed_SPY = prices_SPY / prices_SPY.ix[0, :]
-    # df_temp = pd.concat([port_val, normed_SPY], keys=['Portfolio', 'SPY'], axis=1)
+    normed_SPY = prices_SPY / prices_SPY.ix[0, :]
+    normed_SPY.rename(columns={'INDEX_SPY': 'SPY'}, inplace=True)
+    compare_SPY = pd.concat([port_val, normed_SPY], axis=1, join='inner')
 
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
             'sharpe_ratio': sharpe_ratio,
-            'cumulative_returns': cum_ret}
+            'cumulative_returns': cum_ret,
+            'performance': compare_SPY}
 
 
 def main():
     """Driver function."""
     from utils import get_data
-    params = {'symbols': ['AAPL', 'FB', 'GOOG'],
-              'start_date': '01/01/2012',
-              'end_date': '03/20/2016',
+    params = {'symbols': ['XOM', 'ABBV', 'MMM', 'GOOG', 'FB', 'SPLV'],
+              'start_date': '01/01/2015',
+              'end_date': '03/20/2015',
               'principle': 1000.00}
-    prices = get_data(params)
-    allocs = optimize_portfolio(prices)
+    prices, prices_SPY = get_data(params)
+    allocs = optimize_portfolio(prices, prices_SPY)
     print(allocs)
 
 

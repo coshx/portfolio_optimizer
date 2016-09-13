@@ -15,17 +15,19 @@ def get_data(params):
          'principle': 1000.00}
 
     Returns:
-    stocks -- Pandas DataFrame with adjusted close of each stock in
-              data['symbols'] as columns and the date range from start_date
-              to end_date as row indices
+    prices_df -- Pandas Dataframe with adjusted close of each stock in
+                 data['symbols'] as columns and the date range from start_date
+                 to end_date as row indices
+    SPY_df -- Pandas dataframe with adjusted close of SPY
     """
     symbols = params['symbols']
     start = params['start_date']
     end = params['end_date']
 
     prices = {s: hit_quandl(s, start, end) for s in symbols}
-    stocks = pd.concat([prices[s] for s in prices], axis=1, join='inner')
-    return stocks
+    prices_df = pd.concat([prices[s] for s in prices], axis=1, join='inner')
+    SPY_df = hit_quandl('INDEX_SPY', start, end)
+    return prices_df, SPY_df
 
 
 def hit_quandl(symbol, start, end):
