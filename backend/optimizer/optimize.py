@@ -23,41 +23,55 @@ def get_portfolio_value(prices, allocs, start_val=1.):
     return portfolio_value
 
 
-def get_portfolio_stats(port_val, SPY_val, daily_rf=5.752e-4, yearly_samples=252):
+def get_cumulative_returns(port_val):
+    """Get cumulative returns of a portfolio value dataframe.
+
+    Args:
+        port_val (dataframe): daily portfolio value
+
+    Returns:
+        cum_ret (float): cumulative return
+    """
+    port_val = (port_val[-1]/port_val[0])-1
+    return port_val
+
+
+def get_daily_returns(port_val):
+    """Get daily returns of a portfolio value dataframe.
+
+    Args:
+        port_val (dataframe): daily portfolio value
+
+    Returns:
+        daily_ret (dataframe): daily returns
+    """
+    daily_ret = port_val.copy()
+    daily_ret[1:] = (port_val[1:] / port_val[:-1].values)-1
+    daily_ret = daily_ret.ix[1:]
+    return daily_ret
+
+
+def get_sharpe_ratio(port_val, SPY_val, daily_rf=5.752e-4, yearly_samples=252):
     """Calculate statistics on given portfolio values.
 
     Args:
         port_val (dataframe): daily portfolio value
-        daily_rf: daily risk-free rate of return (default: 5.752e-4)
+        SPY_val (dataframe): daily value of SPY portfolio
+        *daily_rf: daily risk-free rate of return (default: 5.752e-4)
             rf = ((1+yearly_percent)^(1/360) - 1)/100%
+            * currently unused
         yearly_samples: frequency of sampling (default: 252)
             There are 252 trading days in a year.
 
     Returns:
-        cum_ret (): cumulative return
-        avg_daily_ret: average of daily returns
-        std_daily_ret: standard deviation of daily returns
-        sharpe_ratio: annualized Sharpe ratio
+        sharpe_ratio (float): annualized Sharpe ratio
     """
-    cum_ret = (port_val[-1]/port_val[0])-1
+    port_daily_ret = get_daily_returns(port_val)
+    SPY_daily_ret = get_daily_returns(SPY_val)
 
-    # Calculate daily returns
-    daily_ret = port_val.copy()
-    daily_ret[1:] = (port_val[1:] / port_val[:-1].values)-1
-    daily_ret = daily_ret.ix[1:]
-
-    # Calculate SPY daily returns
-    daily_ret_SPY = SPY_val.copy()
-    daily_ret_SPY[1:] = (SPY_val[1:] / SPY_val[:-1].values)-1
-    daily_ret_SPY = daily_ret_SPY.ix[1:]
-
-    # Continue calculating stats
-    avg_daily_ret = daily_ret.mean()
-    std_daily_ret = daily_ret.std()
-
-    sharpe_ratio = np.sqrt(yearly_samples) * (daily_ret-daily_ret_SPY).mean()/(daily_ret-daily_ret_SPY).std()
-
-    return cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio
+    sharpe_ratio = np.sqrt(yearly_samples) * ((port_daily_ret-SPY_daily_ret).mean() /
+                                              (port_daily_ret-SPY_daily_ret).std())
+    return sharpe_ratio
 
 
 def optimize_allocations(prices, prices_SPY):
@@ -81,8 +95,7 @@ def optimize_allocations(prices, prices_SPY):
     def sharpe(weights):
         port_val = get_portfolio_value(prices, weights)
         SPY_val = get_portfolio_value(prices_SPY, [1])
-        sharpe = get_portfolio_stats(port_val, SPY_val)
-        return get_portfolio_stats(get_portfolio_value(prices, weights), SPY_val)[3] * -1
+        return get_sharpe_ratio(port_val, SPY_val) * -1
 
     # 2. Set bounds
     num_stocks = prices.shape[1]
@@ -102,22 +115,18 @@ def optimize_portfolio(prices, prices_SPY):
     """Simulate and optimize portfolio allocations."""
     # Get optimal allocations
     prices = prices.reindex_axis(sorted(prices.columns), axis=1)
-    symbols = list(prices.columns.values)
     allocs = optimize_allocations(prices, prices_SPY)
     allocs = allocs / np.sum(allocs)
 
-    # Get daily portfolio value (already normalized since we use default start_val=1.0)
+    # Get daily portfolio value (normalized to 1.0)
     port_val = get_portfolio_value(prices, allocs)
     SPY_val = get_portfolio_value(prices_SPY, [1])
-
     compare_SPY = pd.concat([port_val, SPY_val], axis=1, join='inner')
 
-    # Get portfolio statistics (note: std_daily_ret = volatility)
-    cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(port_val, SPY_val)
-
+    symbols = list(prices.columns.values)
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
-            'sharpe_ratio': sharpe_ratio,
-            'cumulative_returns': cum_ret}
+            'sharpe_ratio': get_sharpe_ratio(port_val, SPY_val),
+            'cumulative_returns': get_cumulative_returns(port_val)}
             # 'performance': compare_SPY}
 
 
