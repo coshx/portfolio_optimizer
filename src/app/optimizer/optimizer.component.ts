@@ -3,7 +3,7 @@ import {HTTP_PROVIDERS} from '@angular/http';
 
 import {OptimizerDataService} from './optimizer-data.service';
 import {InputComponent} from './input/input.component';
-import {BarchartComponent} from './barchart/barchart.component';
+import {ChartsComponent} from './charts/charts.component';
 import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
@@ -11,7 +11,7 @@ import {ResultsTableComponent} from './results-table/results-table.component';
   selector: 'optimizer',
   templateUrl: 'optimizer.component.html',
   styleUrls: ['optimizer.component.css'],
-  directives: [InputComponent, BarchartComponent, ResultsTableComponent],
+  directives: [InputComponent, ChartsComponent, ResultsTableComponent],
   providers: [OptimizerDataService, HTTP_PROVIDERS]
 })
 export class OptimizerComponent implements OnInit {
