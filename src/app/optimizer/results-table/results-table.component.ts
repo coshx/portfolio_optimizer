@@ -7,6 +7,6 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 
 export class ResultsTableComponent{
-	@Input() tableRows;
-	@Input() highlightLastRow;
+  @Input() tableRows;
+  @Input() highlightLastRow;
 }

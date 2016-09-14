@@ -1,16 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http} from '@angular/http';
 import {Subject} from 'rxjs/Rx';
 import {environment} from '../';
 
 @Injectable()
 export class OptimizerDataService {
-  // TODO: Add these once backend can
-  // initialInvestment: Number;
-  // endValue: Number;
 
   responseSubject: Subject<Object> = new Subject();
-
   formDataSubject: Subject<Object> = new Subject();
 
   resetResponseSubject() {
@@ -43,7 +39,7 @@ export class OptimizerDataService {
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
         data => this.responseSubject.next(data.json()),
-        err => this.responseSubject.error(err)//console.log("Hello" + err)
+        err => this.responseSubject.error(err)
       );
   }
 }
