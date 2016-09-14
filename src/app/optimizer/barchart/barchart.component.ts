@@ -7,8 +7,7 @@ import * as d3 from 'd3';
   templateUrl: 'barchart.component.html',
   styleUrls: ['barchart.component.css']
 })
-
-export class BarchartComponent{
+export class BarchartComponent implements OnChanges {
   constructor() {}
 
   @Input() optimalAllocs: Array<any>;
@@ -28,38 +27,38 @@ export class BarchartComponent{
 
     let xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient('bottom');
 
     let yAxis = d3.svg.axis()
         .scale(y)
-        .orient("left");
+        .orient('left');
 
-    let svg = d3.select("div.chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    let svg = d3.select('div.chart').append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
     x.domain(this.optimalAllocs.map(function(d) { return d.name; }));
     y.domain([0, d3.max(this.optimalAllocs, function(d) { return d.value; })]);
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', "translate(0," + height + ")")
         .call(xAxis);
 
     svg.append('g')
       .attr('class', 'y axis')
       .call(yAxis);
 
-    svg.selectAll(".bar")
+    svg.selectAll('.bar')
         .data(this.optimalAllocs)
-      .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+      .enter().append('rect')
+        .attr('class', 'bar')
+        .attr('x', function(d) { return x(d.name); })
+        .attr('width', x.rangeBand())
+        .attr('y', function(d) { return y(d.value); })
+        .attr('height', function(d) { return height - y(d.value); });
   }
 
   removeOldChart() {

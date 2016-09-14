@@ -88,7 +88,7 @@ export class OptimizerComponent implements OnInit {
     // Subscribe to the stream that will have HTTP Post responses
     this.optimizerDataService.responseSubject.subscribe(
       (response) => {
-        //next value
+        // next value
         this.parseResponse(response);
         this.loading--;
       },
