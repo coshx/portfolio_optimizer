@@ -117,8 +117,8 @@ def optimize_portfolio(prices, prices_SPY):
 
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
             'sharpe_ratio': sharpe_ratio,
-            'cumulative_returns': cum_ret,
-            'performance': compare_SPY}
+            'cumulative_returns': cum_ret}
+            # 'performance': compare_SPY}
 
 
 def main():
