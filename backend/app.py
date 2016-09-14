@@ -44,13 +44,14 @@ def make_app():
     tornado.options.parse_command_line()
     return tornado.web.Application([
         (r"/", MainHandler),
+        (r"/backend", MainHandler)
     ])
 
 
 def optimize_allocations(stock_params):
     """Call methods to get stock data and find optimal allocations."""
-    prices = get_data(stock_params)
-    allocs = optimize_portfolio(prices)
+    prices, prices_SPY = get_data(stock_params)
+    allocs = optimize_portfolio(prices, prices_SPY)
     return allocs
 
 
