@@ -78,18 +78,11 @@ def optimize_allocations(prices, prices_SPY):
     """Find optimal allocations for a stock portfolio, optimizing for Sharpe ratio.
 
     Args:
-        data (dict): a portfolio of the form
-            {'symbols': ['AAPL', 'FB', 'GOOG'],
-             'start_date': '01/01/2012',
-             'end_date': '03/20/2016',
-             'principle': 1000.00}
-
+        prices (dataframe): prices for stocks in our portfolio
+        prices_SPY (dataframe): prices for SPY
 
     Returns:
-    allocs -- dictionary of the following form:
-        {'AAPL', 0.5,
-         'GOOG', 0.3,
-         'FB', 0.2}
+        sharpe_ratio (float): Sharpe ratio for optimally allocated portfolio
     """
     # 1. Define 'error' function
     def sharpe(weights):
@@ -107,12 +100,19 @@ def optimize_allocations(prices, prices_SPY):
     result = spo.minimize(sharpe, num_stocks * [1. / num_stocks],
                           method='SLSQP', bounds=bnds,
                           constraints=cons, options={'disp': False})
-
     return result['x']
 
 
 def optimize_portfolio(prices, prices_SPY):
-    """Simulate and optimize portfolio allocations."""
+    """Simulate and optimize portfolio allocations.
+
+    Args:
+        prices (dataframe): prices for stocks in our portfolio
+        prices_SPY (dataframe): prices for SPY
+
+    Returns:
+        optimal_portfolio (dict): dict containing optimal portfolio stats
+    """
     # Get optimal allocations
     prices = prices.reindex_axis(sorted(prices.columns), axis=1)
     allocs = optimize_allocations(prices, prices_SPY)
@@ -126,8 +126,8 @@ def optimize_portfolio(prices, prices_SPY):
     symbols = list(prices.columns.values)
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
             'sharpe_ratio': get_sharpe_ratio(port_val, SPY_val),
-            'cumulative_returns': get_cumulative_returns(port_val)}
-            # 'performance': compare_SPY}
+            'cumulative_returns': get_cumulative_returns(port_val),
+            'performance': compare_SPY.to_json()}
 
 
 def main():
