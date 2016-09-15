@@ -1,12 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'results-table',
   templateUrl: 'results-table.component.html'
 })
 
 export class ResultsTableComponent{
-	@Input() tableRows;
-	@Input() highlightLastRow;
+  @Input() tableRows;
+  @Input() highlightLastRow;
 }
