@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { ChartsComponent } from './optimizer/charts/charts.component';
 import { StocksAppComponent } from './stocks.component';
 import { OptimizerComponent } from './optimizer/optimizer.component';
 import { InputComponent } from './optimizer/input/input.component';
@@ -22,6 +23,7 @@ import { ChartsModule } from './optimizer/charts/charts.module';
   declarations: [
     StocksAppComponent,
     OptimizerComponent,
+    ChartsComponent,
     InputComponent,
     ResultsTableComponent
   ],
