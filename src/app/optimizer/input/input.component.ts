@@ -1,13 +1,11 @@
 import {Injectable, Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, Validators, REACTIVE_FORM_DIRECTIVES} from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {SymbolsValidator} from './symbols.validator';
 
 @Component({
-  moduleId: module.id,
   selector: 'user-input',
   templateUrl: 'input.component.html',
-  styleUrls: ['input.component.css'],
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  styleUrls: ['input.component.css']
 })
 
 @Injectable()

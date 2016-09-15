@@ -2,7 +2,6 @@ import {Component, Input, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  moduleId: module.id,
   selector: 'barchart',
   templateUrl: 'barchart.component.html',
   styleUrls: ['barchart.component.css']

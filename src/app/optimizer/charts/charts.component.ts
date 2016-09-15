@@ -2,7 +2,6 @@ import {Component, Input, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  moduleId: module.id,
   selector: 'charts',
   templateUrl: 'charts.component.html',
   styleUrls: ['charts.component.css']
@@ -14,7 +13,7 @@ export class ChartsComponent implements OnChanges {
   @Input() title: string;
 
   createChart() {
-    let container = document.getElementsByClassName("chart")[0];
+    let container = document.getElementsByClassName('chart')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;

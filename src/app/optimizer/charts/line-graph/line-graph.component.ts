@@ -2,7 +2,6 @@ import {Component, Input, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  moduleId: module.id,
   selector: 'line-graph',
   templateUrl: 'line-graph.component.html',
   styleUrls: ['line-graph.component.css']
