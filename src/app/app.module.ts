@@ -8,9 +8,7 @@ import { StocksAppComponent } from './stocks.component';
 import { OptimizerComponent } from './optimizer/optimizer.component';
 import { InputComponent } from './optimizer/input/input.component';
 import { ResultsTableComponent } from './optimizer/results-table/results-table.component';
-import { ChartsComponent } from './optimizer/charts/charts.component';
-import { BarchartComponent } from './optimizer/charts/barchart/barchart.component';
-import { LineGraphComponent } from './optimizer/charts/line-graph/line-graph.component';
+import { ChartsModule } from './optimizer/charts/charts.module';
 
 @NgModule({
   imports: [
@@ -18,16 +16,14 @@ import { LineGraphComponent } from './optimizer/charts/line-graph/line-graph.com
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing
+    routing,
+    ChartsModule
   ],
   declarations: [
     StocksAppComponent,
     OptimizerComponent,
     InputComponent,
-    ResultsTableComponent,
-    ChartsComponent,
-    BarchartComponent,
-    LineGraphComponent
+    ResultsTableComponent
   ],
   providers: [
     appRoutingProviders
