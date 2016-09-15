@@ -15,7 +15,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "../node_modules/bootswatch/flatly/bootstrap.css"
       ],
       "scripts": [
       ],
