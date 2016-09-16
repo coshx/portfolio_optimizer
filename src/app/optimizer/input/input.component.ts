@@ -1,4 +1,4 @@
-import {Injectable, Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
+import {Injectable, Component, Output, Input, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {SymbolsValidator} from './symbols.validator';
 
@@ -9,7 +9,7 @@ import {SymbolsValidator} from './symbols.validator';
 })
 
 @Injectable()
-export class InputComponent implements OnInit {
+export class InputComponent {
 
   @Output() submitData = new EventEmitter();
   @Input() loading: number;
@@ -50,10 +50,5 @@ export class InputComponent implements OnInit {
     this.diagnosticData = query;
 
     this.submitData.emit(query);
-  }
-
-  get diagnostic() { return JSON.stringify(this.diagnosticData); }
-
-  ngOnInit() {
   }
 };

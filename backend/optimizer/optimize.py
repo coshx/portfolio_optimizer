@@ -121,7 +121,8 @@ def optimize_portfolio(prices, prices_SPY):
     # Get daily portfolio value (normalized to 1.0)
     port_val = get_portfolio_value(prices, allocs)
     SPY_val = get_portfolio_value(prices_SPY, [1])
-    compare_SPY = pd.concat([port_val, SPY_val], axis=1, join='inner')
+    compare_SPY = pd.concat([port_val, SPY_val], keys=['Optimized', 'SPY'],
+                            axis=1, join='inner')
 
     symbols = list(prices.columns.values)
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},

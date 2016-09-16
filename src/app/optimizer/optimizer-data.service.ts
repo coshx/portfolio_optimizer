@@ -38,7 +38,11 @@ export class OptimizerDataService {
 
     return this.http.post(url, JSON.stringify(formData))
       .subscribe(
-        data => this.responseSubject.next(data.json()),
+        data => {
+          let response = data.json();
+          response.performance = JSON.parse(response.performance);
+          this.responseSubject.next(response);
+        },
         err => this.responseSubject.error(err)
       );
   }
