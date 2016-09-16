@@ -4,25 +4,16 @@
   </div>
   <div class="panel-body">
     <div class="row">
-
-        <ul class="nav nav-tabs" id="graphTabs">
-          <li class="active">
-            <a href="#line-graph" data-toggle="tab" aria-expanded="true">Line Graph</a>
-          </li>
-          <li class="">
-            <a href="#barchart" data-toggle="tab" aria-expanded="false">Barchart</a>
-          </li>
-        </ul>
-
-        <div class="tab-content">
-          <div class="tab-pane active" id="line-graph">
+      <div class="col-md-12">
+        <tabset>
+          <tab heading="Line Graph">
             <line-graph></line-graph>
-          </div>
-          <div class="tab-pane active" id="barchart">
+          </tab>
+          <tab heading="Barchart">
             <barchart></barchart>
-          </div>
-        </div>
-
+          </tab>
+        </tabset>
+      </div>
     </div>
   </div>
 </div>

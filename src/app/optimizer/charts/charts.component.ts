@@ -1,5 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
+
 import * as d3 from 'd3';
+import {TabsModule} from 'ng2-bootstrap/components/tabs';
 
 @Component({
   selector: 'charts',
