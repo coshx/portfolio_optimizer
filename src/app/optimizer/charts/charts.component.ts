@@ -12,4 +12,5 @@ export class ChartsComponent {
 
   @Input() optimalAllocs: Array<any>;
   @Input() title: string;
+  @Input() performance: Object;
 }

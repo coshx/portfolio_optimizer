@@ -1,20 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 
 import {OptimizerDataService} from './optimizer-data.service';
-import {InputComponent} from './input/input.component';
-import {ChartsComponent} from './charts/charts.component';
-import {ResultsTableComponent} from './results-table/results-table.component';
 
 @Component({
   selector: 'optimizer',
   templateUrl: 'optimizer.component.html',
   styleUrls: ['optimizer.component.css'],
   providers: [OptimizerDataService]
-  //entryComponents: [InputComponent, ChartsComponent, ResultsTableComponent]
 })
 export class OptimizerComponent implements OnInit {
   optimalAllocs: Array<Object>;
   sharpeRatio: number;
+  performance: Object;
   trailingDecimals: number = 4;
 
   // Model of recent button submit
@@ -34,7 +31,7 @@ export class OptimizerComponent implements OnInit {
                         'optimal_allocations': {'FB': 0.45104,
                                                 'GOOG': 0.54895,
                                                 'AAPL': 0},
-                        'sharpe_ratio':0.57303}
+                        'sharpe_ratio': 0.57303};
     // Seed optimalAllocs and tableRows, so that the chart and table have values
     //  without having to wait for a HTTP Post response
     this.parseResponse(seedResponse);
@@ -54,6 +51,10 @@ export class OptimizerComponent implements OnInit {
       obj['value'] = response['optimal_allocations'][key];
       this.optimalAllocs.push(obj);
     }
+
+    // Format performance
+    this.performance = response['performance'];
+    // TODO: parse dates!
 
     // Format tableRows
     this.sharpeRatio = response['sharpe_ratio'];

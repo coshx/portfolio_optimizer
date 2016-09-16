@@ -3,7 +3,9 @@
     <user-input (submitData)="submitData($event)" [loading]="loading"></user-input>
   </div>
   <div class="col-md-8">
-    <charts [optimalAllocs]="optimalAllocs" [title]="'Optimal Allocations Chart'"></charts>
+    <charts [optimalAllocs]="optimalAllocs"
+            [title]="'Optimal Allocations Chart'"
+            [performance]="performance"></charts>
   </div>
 </div>
 <div class="row">

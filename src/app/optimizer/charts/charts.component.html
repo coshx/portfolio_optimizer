@@ -8,10 +8,12 @@
 
         <tabset>
           <tab heading="Line Graph">
-            <line-graph></line-graph>
+            <line-graph [performance]="performance"
+                        [title]="'Optimal Allocations Chart'"></line-graph>
           </tab>
           <tab heading="Barchart">
-            <barchart [optimalAllocs]="optimalAllocs" [title]="'Optimal Allocations Chart'"></barchart>
+            <barchart [optimalAllocs]="optimalAllocs"
+                      [title]="'Optimal Allocations Chart'"></barchart>
           </tab>
         </tabset>
 
