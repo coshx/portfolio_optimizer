@@ -1,0 +1,7 @@
+{
+  "name": "migration-project",
+  "dependencies": {},
+  "globalDependencies": {
+    "moment": "registry:dt/moment#2.11.1+20160829143156"
+  }
+}

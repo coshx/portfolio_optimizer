@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
+
 import { StocksAppComponent } from './stocks.component';
 import { OptimizerComponent } from './optimizer/optimizer.component';
 import { InputComponent } from './optimizer/input/input.component';
@@ -18,7 +20,9 @@ import { LineGraphComponent } from './optimizer/charts/line-graph/line-graph.com
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing
+    routing,
+    AlertModule,
+    DatepickerModule
   ],
   declarations: [
     StocksAppComponent,
