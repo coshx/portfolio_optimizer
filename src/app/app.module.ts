@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { ChartsComponent } from './optimizer/charts/charts.component';
 import { StocksAppComponent } from './stocks.component';
 import { OptimizerComponent } from './optimizer/optimizer.component';
 import { InputComponent } from './optimizer/input/input.component';
 import { ResultsTableComponent } from './optimizer/results-table/results-table.component';
-import { ChartsModule } from './optimizer/charts/charts.module';
+import { ChartsComponent } from './optimizer/charts/charts.component';
+import { BarchartComponent } from './optimizer/charts/barchart/barchart.component';
+import { LineGraphComponent } from './optimizer/charts/line-graph/line-graph.component';
 
 @NgModule({
   imports: [
@@ -17,15 +18,16 @@ import { ChartsModule } from './optimizer/charts/charts.module';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing,
-    ChartsModule
+    routing
   ],
   declarations: [
     StocksAppComponent,
     OptimizerComponent,
-    ChartsComponent,
     InputComponent,
-    ResultsTableComponent
+    ResultsTableComponent,
+    ChartsComponent,
+    BarchartComponent,
+    LineGraphComponent
   ],
   providers: [
     appRoutingProviders

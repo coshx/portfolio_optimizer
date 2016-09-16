@@ -13,7 +13,7 @@ export class BarchartComponent implements OnChanges {
   @Input() title: string;
 
   createChart() {
-    let container = document.getElementsByClassName("chart")[0];
+    let container = document.getElementsByClassName('chart')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
@@ -36,14 +36,14 @@ export class BarchartComponent implements OnChanges {
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
-        .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     x.domain(this.optimalAllocs.map(function(d) { return d.name; }));
     y.domain([0, d3.max(this.optimalAllocs, function(d) { return d.value; })]);
 
     svg.append('g')
         .attr('class', 'x axis')
-        .attr('transform', "translate(0," + height + ")")
+        .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
 
     svg.append('g')
