@@ -5,14 +5,16 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
+
         <tabset>
           <tab heading="Line Graph">
             <line-graph></line-graph>
           </tab>
           <tab heading="Barchart">
-            <barchart></barchart>
+            <barchart [optimalAllocs]="optimalAllocs" [title]="'Optimal Allocations Chart'"></barchart>
           </tab>
         </tabset>
+
       </div>
     </div>
   </div>
