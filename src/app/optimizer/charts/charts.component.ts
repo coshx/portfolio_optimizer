@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,7 +6,7 @@ import * as d3 from 'd3';
   templateUrl: 'charts.component.html',
   styleUrls: ['charts.component.css']
 })
-export class ChartsComponent  {
+export class ChartsComponent implements OnInit {
   constructor() {}
 
   @Input() optimalAllocs: Array<any>;
@@ -72,5 +72,9 @@ export class ChartsComponent  {
   //   this.removeOldChart();
   //   this.createChart();
   // }
+  ngOnInit() {
+    // $('#graphTabs a[href="#line-graph"]').tab('show');
+    // $('#graphTabs a[href="#barchart"]').tab('show');
+  }
 
 }

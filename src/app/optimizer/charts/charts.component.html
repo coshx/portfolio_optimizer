@@ -4,17 +4,25 @@
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class="chart">
-        <ul class="nav nav-tabs">
+
+        <ul class="nav nav-tabs" id="graphTabs">
           <li class="active">
-            <a routerLink="/optimizer/line-graph" routerLinkActive="active" data-toggle="tab" aria-expanded="true">Line Graph</a>
+            <a href="#line-graph" data-toggle="tab" aria-expanded="true">Line Graph</a>
           </li>
           <li class="">
-            <a routerLink="/optimizer/barchart" routerLinkActive="active" data-toggle="tab" aria-expanded="false">Barchart</a>
+            <a href="#barchart" data-toggle="tab" aria-expanded="false">Barchart</a>
           </li>
         </ul>
-        <router-outlet></router-outlet>
-      </div>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="line-graph">
+            <line-graph></line-graph>
+          </div>
+          <div class="tab-pane active" id="barchart">
+            <barchart></barchart>
+          </div>
+        </div>
+
     </div>
   </div>
 </div>
