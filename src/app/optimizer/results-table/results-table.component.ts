@@ -8,32 +8,38 @@ import {Component, Input, OnChanges} from '@angular/core';
 export class ResultsTableComponent implements OnChanges {
   constructor() {}
 
+  trailingDecimals = 0;
   @Input() optimalAllocs;
   @Input() initialInvestment;
 
   tableRows: Array<Array<string>>;
 
   ngOnChanges() {
-    // TODO: Gracefully handle not having any data
-    let stocks: Array<string> = Object.keys(this.optimalAllocs).sort();
-    let naive: Array<string> = [];
-    for (let _ of stocks) {
-      naive.push((100 / stocks.length).toString());
-    }
+    this.updateTable();
+  }
+
+  updateTable() {
+    let stocks: Array<string> = [];
     let optimal: Array<string> = [];
-    for (let stock of stocks) {
-      optimal.push((this.optimalAllocs[stock] * 100).toFixed(2).toString());
+    let naive: Array<string> = [];
+
+    // update stocks and optimal
+    for (let obj of this.optimalAllocs) {
+      let stock = Object.keys(obj)[0];
+      stocks.push(stock);
+      let allocation = (obj[stock] * 100).toFixed(this.trailingDecimals);
+      optimal.push(allocation.toString() + '%');
     }
+    // update naive
+    for (let _ of stocks) {
+      let allocation = (100 / stocks.length).toFixed(this.trailingDecimals);
+      naive.push(allocation.toString() + '%');
+    }
+
     this.tableRows = [['Stock', 'Naive', 'Optimal']];
-    for (let r = 0; r < stocks.length; r++) {
-      let row: Array<string> = [];
-      for (let c = 0; c < this.tableRows.length; c++) {
-        row.push(stocks[c]);
-        row.push(naive[c]);
-        row.push(optimal[c]);
-      }
-      this.tableRows.push(row);
+    for (let i = 0; i < stocks.length; i++) {
+      let row = [stocks[i], naive[i], optimal[i]];
+      this.tableRows[i + 1] = row;
     }
-    console.log(this.tableRows);
   }
 }
