@@ -14,6 +14,7 @@ export class BarchartComponent implements OnChanges {
   @Input() optimalAllocs: Array<any>;
 
   createChart() {
+    // get stocks and their allocations
     let stocks = [];
     let allocs = [];
     for (let obj of this.optimalAllocs) {
@@ -22,6 +23,8 @@ export class BarchartComponent implements OnChanges {
       let allocation = (obj[stock] * 100).toFixed(this.trailingDecimals);
       allocs.push(allocation.toString());
     }
+
+    // set up chart axes
     let container = document.getElementsByClassName('chart')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
@@ -46,7 +49,6 @@ export class BarchartComponent implements OnChanges {
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-    console.log('optimalAllocs:', this.optimalAllocs);
     x.domain(stocks);
     y.domain([0, d3.max(allocs)]);
 
