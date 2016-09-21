@@ -35,8 +35,8 @@ class MainHandler(tornado.web.RequestHandler):
         """Respond to POST requests with optimal allocations."""
         data = json.loads(self.request.body.decode('utf-8'))
         stock_params = dict_from_data(data)
-        allocs = optimize_allocations(stock_params)
-        self.write(allocs)
+        response = optimize_allocations(stock_params)
+        self.write(response)
         self.finish()
 
 
@@ -52,6 +52,7 @@ def optimize_allocations(stock_params):
     """Call methods to get stock data and find optimal allocations."""
     prices, prices_SPY = get_data(stock_params)
     allocs = optimize_portfolio(prices, prices_SPY)
+    allocs['initial_investment'] = stock_params['initial_investment']
     return allocs
 
 
@@ -61,7 +62,7 @@ def dict_from_data(data):
     data = dict(data)
     mapping = {"startDate": "start_date",
                "endDate": "end_date",
-               "initialInvestment": "principle"}
+               "initialInvestment": "initial_investment"}
     for k, v in data.items():
         if k in mapping:
             output[mapping[k]] = v

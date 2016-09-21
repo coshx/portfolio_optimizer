@@ -5,21 +5,23 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
-        <table class="table table-striped table-hover ">
-          <thead>
-            <tr>
-              <th *ngFor="let value of tableRows[0]">{{value}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of tableRows | slice:1:-1">
-              <td *ngFor="let value of row">{{value}}</td>
-            </tr>
-            <tr [ngClass]="{'success' : highlightLastRow}">
-              <td *ngFor="let value of tableRows[tableRows.length-1]">{{value}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div *ngIf="tableRows != undefined">
+          <table class="table table-striped table-hover ">
+            <thead>
+              <tr>
+                <th *ngFor="let value of tableRows[0]">{{value}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of tableRows | slice:1:-1">
+                <td *ngFor="let value of row">{{value}}</td>
+              </tr>
+              <tr [ngClass]="{'success' : true}">
+                <td *ngFor="let value of tableRows[tableRows.length-1]">{{value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

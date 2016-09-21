@@ -2,14 +2,19 @@
   <div class="col-md-4">
     <user-input (submitData)="submitData($event)" [loading]="loading"></user-input>
   </div>
-  <div class="col-md-8">
+  <div *ngIf="optimalAllocs && cumulativeReturns && performance != undefined"
+       class="col-md-8">
     <charts [optimalAllocs]="optimalAllocs"
-            [title]="'Optimal Allocations Chart'"
-            [performance]="performance"></charts>
+            [cumulativeReturns]="cumulativeReturns"
+            [performance]="performance">
+    </charts>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
-    <results-table [tableRows]="tableRows" [highlightLastRow]="true"></results-table>
+  <div *ngIf="optimalAllocs && initialInvestment != undefined"
+       class="col-md-12">
+    <results-table [optimalAllocs]="optimalAllocs"
+                   [initialInvestment]="initialInvestment">
+    </results-table>
   </div>
 </div>

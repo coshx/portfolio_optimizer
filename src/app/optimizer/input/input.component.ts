@@ -1,4 +1,4 @@
-import {Injectable, Component, Output, Input, EventEmitter} from '@angular/core';
+import {Injectable, Component, Output, Input, EventEmitter, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {SymbolsValidator} from './symbols.validator';
 
@@ -9,14 +9,12 @@ import {SymbolsValidator} from './symbols.validator';
 })
 
 @Injectable()
-export class InputComponent {
+export class InputComponent implements OnInit {
 
   @Output() submitData = new EventEmitter();
   @Input() loading: number;
 
   optimizeForm: FormGroup;
-
-  diagnosticData;
 
   constructor() {
     this.optimizeForm = new FormGroup({
@@ -38,6 +36,11 @@ export class InputComponent {
         )
     });
   }
+
+  ngOnInit() {
+    this.onSubmit(this.optimizeForm.value);
+  }
+
   onSubmit(form) {
     let query = {symbols: [], startDate: '', endDate: '', initialInvestment: ''};
     // Turn string of stocks, into array of strings
@@ -47,7 +50,6 @@ export class InputComponent {
     query.startDate = form.startDate;
     query.endDate = form.endDate;
     query.initialInvestment = form.initialInvestment;
-    this.diagnosticData = query;
 
     this.submitData.emit(query);
   }

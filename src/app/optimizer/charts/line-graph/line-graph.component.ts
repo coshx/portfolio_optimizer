@@ -6,20 +6,24 @@ import * as d3 from 'd3';
   templateUrl: 'line-graph.component.html',
   styleUrls: ['line-graph.component.css']
 })
-export class LineGraphComponent {// implements OnChanges {
+export class LineGraphComponent implements OnChanges {
+  title: 'Optimal Portfolio Performance';
   constructor() {}
 
-  @Input() optimalAllocs: Array<any>;
-  @Input() title: string;
   @Input() performance: Object;
+  @Input() cumulativeReturns: number;
+
+  // TODO: Format performance (dates) and other inputs
 
   createChart() {
+    console.log(this.performance);
+
     let container = document.getElementsByClassName("chart")[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
 
-    let formatDate = d3.time.format("%d-%b-%y");
+    let formatDate = d3.time.format("%m/%d/%Y");
 
     var x = d3.time.scale()
       .range([0, width]);
@@ -36,8 +40,8 @@ export class LineGraphComponent {// implements OnChanges {
       .orient("left");
 
     var line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.close); });
+      .x(function(p) { return x(p.date); })
+      .y(function(p) { return y(p.close); });
 
     var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -45,8 +49,8 @@ export class LineGraphComponent {// implements OnChanges {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain(d3.extent(data, function(d) { return d.close; }));
+    x.domain(d3.extent(this.performance, function(p) { return p.date; }));
+    y.domain(d3.extent(this.performance, function(p) { return p.close; }));
 
     svg.append("g")
       .attr("class", "x axis")
@@ -64,22 +68,22 @@ export class LineGraphComponent {// implements OnChanges {
       .text("Price ($)");
 
     svg.append("path")
-      .datum(data)
+      .datum(this.performance)
       .attr("class", "line")
       .attr("d", line);
   }
 
-  // removeOldChart() {
-  //   // If svg element exists, remove it
-  //   // If it doesn't, nothing happens
-  //   d3.select('svg').remove();
-  // }
+  removeOldChart() {
+    // If svg element exists, remove it
+    // If it doesn't, nothing happens
+    d3.select('svg').remove();
+  }
 
-  // ngOnChanges(){
-  //   // Called on changes to the bindings
-  //   // At the very beginning when the bindings are first specified, this counts as a change
-  //   this.removeOldChart();
-  //   this.createChart();
-  // }
+  ngOnChanges(){
+    // Called on changes to the bindings
+    // At the very beginning when the bindings are first specified, this counts as a change
+    this.removeOldChart();
+    this.createChart();
+  }
 
 }

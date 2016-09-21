@@ -7,14 +7,18 @@
       <div class="col-md-12">
 
         <tabset>
-          <tab heading="Line Graph">
-            <line-graph [performance]="performance"
-                        [title]="'Optimal Allocations Chart'"></line-graph>
-          </tab>
-          <tab heading="Barchart">
-            <barchart [optimalAllocs]="optimalAllocs"
-                      [title]="'Optimal Allocations Chart'"></barchart>
-          </tab>
+          <div *ngIf="performance && cumulativeReturns != undefined">
+            <tab heading="Line Graph">
+              <line-graph [performance]="performance"
+                          [cumulativeReturns]="cumulativeReturns">
+              </line-graph>
+            </tab>
+          </div>
+          <div *ngIf="optimalAllocs != undefined">
+            <tab heading="Barchart">
+              <barchart [optimalAllocs]="optimalAllocs"></barchart>
+            </tab>
+          </div>
         </tabset>
 
       </div>

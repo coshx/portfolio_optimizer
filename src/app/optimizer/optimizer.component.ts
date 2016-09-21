@@ -9,74 +9,46 @@ import {OptimizerDataService} from './optimizer-data.service';
   providers: [OptimizerDataService]
 })
 export class OptimizerComponent implements OnInit {
-  optimalAllocs: Array<Object>;
-  sharpeRatio: number;
-  performance: Object;
-  trailingDecimals: number = 4;
+  static trailingDecimals: number = 4;
 
-  // Model of recent button submit
-  query: Object = {endDate: '03/20/2016',
-                   initialInvestment: '1000',
-                   startDate: '01/01/2012',
-                   symbols: ['FB', 'GOOG', 'AAPL']};
+  initialInvestment: number;
+  cumulativeReturns: number;
+  optimalAllocs: Array<Object>;
+  performance: Object;
+  sharpeRatio: number;
+
+  query: Object;
   loading: number;
-  tableRows: Array<Array<string>>;  // data table is 2D array
 
   constructor(private optimizerDataService: OptimizerDataService) {
     this.loading = 0;
   }
 
   ngOnInit() {
-    let seedResponse = {'cumulative_returns': 1.66505,
-                        'optimal_allocations': {'FB': 0.45104,
-                                                'GOOG': 0.54895,
-                                                'AAPL': 0},
-                        'sharpe_ratio': 0.57303};
-    // Seed optimalAllocs and tableRows, so that the chart and table have values
-    //  without having to wait for a HTTP Post response
-    this.parseResponse(seedResponse);
     this.subscribeToResponse();
   }
 
   parseResponse(response: Object) {
-    // Parse the new HTTP response from the stream into the local variables
-    let keys: Array<string> = Object.keys(response['optimal_allocations']).sort();
+    console.log("parseResponse called");
+    console.log(response);
 
-    // Format optimalAllocs
+    this.initialInvestment = response['initial_investment'];
+    this.cumulativeReturns = response['cumulative_returns'];
     this.optimalAllocs = [];
-    let obj: Object;
-    for (let key of keys) {
-      obj = {};
-      obj['name'] = key;
-      obj['value'] = response['optimal_allocations'][key];
-      this.optimalAllocs.push(obj);
+    for (let key in response['optimal_allocations']) {
+      if (response['optimal_allocations'].hasOwnProperty(key)) {
+        let pair = {};
+        let value = response['optimal_allocations'][key];
+        pair[key] = value;
+        this.optimalAllocs.push(pair);
+      }
     }
-
-    // Format performance
     this.performance = response['performance'];
-    // TODO: parse dates!
-
-    // Format tableRows
     this.sharpeRatio = response['sharpe_ratio'];
-    this.tableRows = [['Stock','Starting Value','Ending Value','Sharpe Ratio']];
-    let row: Array<string>;
-    for (let key of keys) {
-      row = [];
-      row.push(key);
-      row.push( (this.query['initialInvestment'] / keys.length).toFixed(this.trailingDecimals).toString() );
-      row.push((response['optimal_allocations'][key] * this.query['initialInvestment']).toFixed(this.trailingDecimals).toString());
-      row.push('');
-      this.tableRows.push(row);
-    }
-    let lastRow: Array<string> = [];
-    lastRow.push('Total');
-    lastRow.push(this.query['initialInvestment'].toString());
-    lastRow.push(this.query['initialInvestment'].toString());
-    lastRow.push(this.sharpeRatio.toFixed(this.trailingDecimals).toString());
-    this.tableRows.push(lastRow);
   }
 
   submitData(value: Object) {
+    console.log("submitData called");
     // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);
@@ -84,6 +56,7 @@ export class OptimizerComponent implements OnInit {
   }
 
   subscribeToResponse() {
+    console.log("subscribeToResponse called");
     // Subscribe to the stream that will have HTTP Post responses
     this.optimizerDataService.responseSubject.subscribe(
       (response) => {

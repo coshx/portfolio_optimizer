@@ -7,10 +7,10 @@ import * as d3 from 'd3';
   styleUrls: ['barchart.component.css']
 })
 export class BarchartComponent implements OnChanges {
+  title: 'Optimal Portfolio Allocations';
   constructor() {}
 
   @Input() optimalAllocs: Array<any>;
-  @Input() title: string;
 
   createChart() {
     let container = document.getElementsByClassName('chart')[0];
@@ -37,7 +37,7 @@ export class BarchartComponent implements OnChanges {
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
+    console.log('optimalAllocs:', this.optimalAllocs);
     x.domain(this.optimalAllocs.map(function(d) { return d.name; }));
     y.domain([0, d3.max(this.optimalAllocs, function(d) { return d.value; })]);
 
