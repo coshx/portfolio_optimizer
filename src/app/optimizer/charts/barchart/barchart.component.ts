@@ -10,9 +10,18 @@ export class BarchartComponent implements OnChanges {
   title: 'Optimal Portfolio Allocations';
   constructor() {}
 
+  trailingDecimals = 0;
   @Input() optimalAllocs: Array<any>;
 
   createChart() {
+    let stocks = [];
+    let allocs = [];
+    for (let obj of this.optimalAllocs) {
+      let stock = Object.keys(obj)[0];
+      stocks.push(stock);
+      let allocation = (obj[stock] * 100).toFixed(this.trailingDecimals);
+      allocs.push(allocation.toString());
+    }
     let container = document.getElementsByClassName('chart')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
@@ -38,8 +47,8 @@ export class BarchartComponent implements OnChanges {
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     console.log('optimalAllocs:', this.optimalAllocs);
-    x.domain(this.optimalAllocs.map(function(d) { return d.name; }));
-    y.domain([0, d3.max(this.optimalAllocs, function(d) { return d.value; })]);
+    x.domain(stocks);
+    y.domain([0, d3.max(allocs)]);
 
     svg.append('g')
         .attr('class', 'x axis')
