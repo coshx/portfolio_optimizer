@@ -135,8 +135,8 @@ def main():
     """Driver function."""
     from utils import get_data
     params = {'symbols': ['XOM', 'ABBV', 'MMM', 'GOOG', 'FB'],
-              'start_date': '01/01/2014',
-              'end_date': '03/20/2016',
+              'start_date': '2014-01-01',
+              'end_date': '2016-03-20',
               'principle': 1000.00}
     prices, prices_SPY = get_data(params)
     allocs = optimize_portfolio(prices, prices_SPY)

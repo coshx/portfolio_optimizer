@@ -1,6 +1,6 @@
 """Given ticker symbols and dates, get stock data from Quandl."""
 
-import Quandl
+import quandl
 import os
 import pandas as pd
 
@@ -11,8 +11,8 @@ def get_data(params):
     Args:
         params (dict): a portfolio of form:
             {'symbols': ['AAPL', 'FB', 'GOOG'],
-             'start_date': '01/01/2012',
-             'end_date': '03/20/2016',
+             'start_date': '2012-01-01',
+             'end_date': '2016-03-20',
              'principle': 1000.00}
 
     Returns:
@@ -33,15 +33,16 @@ def get_data(params):
 def hit_quandl(symbol, start, end):
     """Gets adjusted close data for a stock."""
     quandl_token = os.environ['QUANDL_TOKEN']
-    price = Quandl.get("YAHOO/{}.6".format(symbol), trim_start=start,
-                       trim_end=end, authtoken=quandl_token)
+    quandl.ApiConfig.api_key = quandl_token
+    price = quandl.get("YAHOO/{}.6".format(symbol), start_date=start,
+                       end_date=end)
     return price.rename(columns={'Adjusted Close': symbol})
 
 
 def main():
     params = {'symbols': ['AAPL', 'FB', 'GOOG'],
-              'start_date': '01/01/2012',
-              'end_date': '03/20/2016',
+              'start_date': '2012-01-01',
+              'end_date': '2016-03-20',
               'principle': 1000.00}
 
 if __name__ == "__main__":
