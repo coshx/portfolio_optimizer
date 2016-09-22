@@ -18,7 +18,7 @@ export class LineGraphComponent implements OnChanges {
   createChart() {
     console.log(this.performance);
 
-    let container = document.getElementsByClassName("chart")[0];
+    let container = document.getElementsByClassName("line-graph")[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;

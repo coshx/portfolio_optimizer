@@ -6,19 +6,32 @@
     <div class="row">
       <div class="col-md-12">
 
-        <tabset>
-          <div *ngIf="performance && cumulativeReturns != undefined">
-            <tab heading="Line Graph">
+        <!-- <tabset type="pills"> -->
+        <!--   <tab *ngFor="let tab of tabs" -->
+        <!--        [heading]="tab.title" -->
+        <!--        [active]="tab.active" -->
+        <!--        (select)="tab.active = true" -->
+        <!--        (deselect)="tab.active = false" -->
+        <!--        [disabled]="tab.disabled" -->
+        <!--        [removable]="tab.removable" -->
+        <!--        (removed)="removeTabHandler(tab)"> -->
+        <!--     {{tab.content}} -->
+        <!--   </tab> -->
+        <!-- </tabset> -->
+        <tabset type="pills">
+          <tab heading="Line Graph">
+            <div *ngIf="performance && cumulativeReturns != undefined">
               <line-graph [performance]="performance"
                           [cumulativeReturns]="cumulativeReturns">
               </line-graph>
-            </tab>
-          </div>
-          <div *ngIf="optimalAllocs != undefined">
-            <tab heading="Barchart">
+            </div>
+          </tab>
+
+          <tab heading="Bar Chart">
+            <div *ngIf="optimalAllocs != undefined">
               <barchart [optimalAllocs]="optimalAllocs"></barchart>
-            </tab>
-          </div>
+            </div>
+          </tab>
         </tabset>
 
       </div>

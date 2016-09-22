@@ -20,7 +20,7 @@ export class BarchartComponent implements OnChanges {
     allocs = allocs.map((a) => (a * 100).toFixed(this.trailingDecimals));
 
     // set up chart axes
-    let container = document.getElementsByClassName('chart')[0];
+    let container = document.getElementsByClassName('barchart')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
@@ -39,7 +39,7 @@ export class BarchartComponent implements OnChanges {
         .scale(y)
         .orient('left');
 
-    let svg = d3.select('div.chart').append('svg')
+    let svg = d3.select('div.barchart').append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
