@@ -19,18 +19,10 @@ export class ResultsTableComponent implements OnChanges {
   }
 
   updateTable() {
-    let stocks: Array<string> = [];
-    let optimal: Array<string> = [];
+    let stocks = this.optimalAllocs['stocks'];
+    let optimal = this.optimalAllocs['allocations'];
+    optimal = optimal.map((opt) => (opt * 100).toFixed(this.trailingDecimals).toString() + '%');
     let naive: Array<string> = [];
-
-    // update stocks and optimal
-    for (let obj of this.optimalAllocs) {
-      let stock = Object.keys(obj)[0];
-      stocks.push(stock);
-      let allocation = (obj[stock] * 100).toFixed(this.trailingDecimals);
-      optimal.push(allocation.toString() + '%');
-    }
-    // update naive
     for (let _ of stocks) {
       let allocation = (100 / stocks.length).toFixed(this.trailingDecimals);
       naive.push(allocation.toString() + '%');

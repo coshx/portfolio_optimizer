@@ -47,10 +47,15 @@ export class InputComponent implements OnInit {
     // ex: 'AAPL, GOOG, FB' --> ['AAPL', 'GOOG', 'FB']
     // This is the format that the backend requires
     query.symbols = form.symbols.replace(/ /g, '').split(',');
-    query.startDate = form.startDate;
-    query.endDate = form.endDate;
+    query.startDate = this.formatDate(form.startDate);
+    query.endDate = this.formatDate(form.endDate);
     query.initialInvestment = form.initialInvestment;
 
     this.submitData.emit(query);
+  }
+
+  formatDate(date) {
+    let re = /(\d+)\/(\d+)\/(\d+)/;
+    return date.replace(re, '$3-$1-$2');
   }
 };

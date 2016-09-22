@@ -9,11 +9,10 @@ import {OptimizerDataService} from './optimizer-data.service';
   providers: [OptimizerDataService]
 })
 export class OptimizerComponent implements OnInit {
-  static trailingDecimals: number = 4;
-
+  trailingDecimals: number = 4;
   initialInvestment: number;
   cumulativeReturns: number;
-  optimalAllocs: Array<Object>;
+  optimalAllocs: Object;
   performance: Object;
   sharpeRatio: number;
 
@@ -32,17 +31,18 @@ export class OptimizerComponent implements OnInit {
     console.log("parseResponse called");
     console.log(response);
 
-    this.initialInvestment = response['initial_investment'];
-    this.cumulativeReturns = response['cumulative_returns'];
-    this.optimalAllocs = [];
+    let stocks = [];
+    let allocations = [];
     for (let key in response['optimal_allocations']) {
       if (response['optimal_allocations'].hasOwnProperty(key)) {
-        let pair = {};
         let value = response['optimal_allocations'][key];
-        pair[key] = value;
-        this.optimalAllocs.push(pair);
+        stocks.push(key);
+        allocations.push(value);
       }
     }
+    this.optimalAllocs = {'stocks': stocks, 'allocations': allocations};
+    this.initialInvestment = response['initial_investment'];
+    this.cumulativeReturns = response['cumulative_returns'];
     this.performance = response['performance'];
     this.sharpeRatio = response['sharpe_ratio'];
   }
