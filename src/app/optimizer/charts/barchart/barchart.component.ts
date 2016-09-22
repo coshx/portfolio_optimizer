@@ -15,14 +15,9 @@ export class BarchartComponent implements OnChanges {
 
   createChart() {
     // get stocks and their allocations
-    let stocks = [];
-    let allocs = [];
-    for (let obj of this.optimalAllocs) {
-      let stock = Object.keys(obj)[0];
-      stocks.push(stock);
-      let allocation = (obj[stock] * 100).toFixed(this.trailingDecimals);
-      allocs.push(allocation.toString());
-    }
+    let stocks = this.optimalAllocs['stocks'];
+    let allocs = this.optimalAllocs['allocations'];
+    allocs = allocs.map((a) => (a * 100).toFixed(this.trailingDecimals));
 
     // set up chart axes
     let container = document.getElementsByClassName('chart')[0];
@@ -61,14 +56,21 @@ export class BarchartComponent implements OnChanges {
       .attr('class', 'y axis')
       .call(yAxis);
 
+    let data = [];
+    for (let i = 0; i < stocks.length; i++) {
+      let obj = {};
+      obj['stock'] = stocks[i];
+      obj['allocation'] = allocs[i];
+      data.push(obj);
+    }
     svg.selectAll('.bar')
-        .data(this.optimalAllocs)
+      .data(data)
       .enter().append('rect')
         .attr('class', 'bar')
-        .attr('x', function(d) { return x(d.name); })
+        .attr('x', function(d) { return x(d.stock); })
         .attr('width', x.rangeBand())
-        .attr('y', function(d) { return y(d.value); })
-        .attr('height', function(d) { return height - y(d.value); });
+        .attr('y', function(d) { return y(d.allocation); })
+        .attr('height', function(d) { return height - y(d.allocation); });
   }
 
   removeOldChart() {
