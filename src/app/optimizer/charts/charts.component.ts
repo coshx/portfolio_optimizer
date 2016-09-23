@@ -11,6 +11,6 @@ export class ChartsComponent {
 
   @Input() optimalAllocs: Array<any>;
   @Input() cumulativeReturns: number;
-  @Input() performance: Object;
+  @Input() performance: Array<any>;
 
 }

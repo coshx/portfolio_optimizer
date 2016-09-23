@@ -11,7 +11,7 @@ export class BarchartComponent implements OnChanges {
   constructor() {}
 
   trailingDecimals = 0;
-  @Input() optimalAllocs: Array<any>;
+  @Input() optimalAllocs: Object;
 
   createChart() {
     // get stocks and their allocations
@@ -44,6 +44,7 @@ export class BarchartComponent implements OnChanges {
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
     x.domain(stocks);
     y.domain([0, d3.max(allocs)]);
 
@@ -53,8 +54,8 @@ export class BarchartComponent implements OnChanges {
         .call(xAxis);
 
     svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis);
+        .attr('class', 'y axis')
+        .call(yAxis);
 
     let data = [];
     for (let i = 0; i < stocks.length; i++) {
