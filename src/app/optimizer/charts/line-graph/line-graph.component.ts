@@ -13,8 +13,6 @@ export class LineGraphComponent implements OnChanges {
   @Input() performance: Object;
   @Input() cumulativeReturns: number;
 
-  // TODO: Format performance (dates) and other inputs
-
   createChart() {
     let optimized = this.performance['Optimized'];
     let SPY = this.performance['SPY'];
@@ -43,16 +41,8 @@ export class LineGraphComponent implements OnChanges {
       .orient('left');
 
     let line = d3.svg.line()
-      .x(function(d) {
-        console.log(d);
-        return x(d.Date);
-      })
-      .y(function(d) {
-        console.log(d);
-        return y(d.Optimized);
-      });
-      // .x((d) => x(new Date(d.Date)))
-      // .y((d) => y(d.Optimized));
+      .x((d) => x(new Date(d['Date'])))
+      .y((d) => y(d['Optimized']));
 
     let svg = d3.select('div.line-graph').append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -60,8 +50,8 @@ export class LineGraphComponent implements OnChanges {
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    x.domain(d3.extent(optimized, function(d) { return new Date(d.Date); }));
-    y.domain(d3.extent(optimized, function(d) { return d.Optimized; }));
+    x.domain(d3.extent(optimized, function(d) { return new Date(d['Date']); }));
+    y.domain(d3.extent(optimized, function(d) { return d['Optimized']; }));
 
     svg.append('g')
         .attr('class', 'x axis')
@@ -83,7 +73,7 @@ export class LineGraphComponent implements OnChanges {
       .enter()
       .append('path')
       .datum(function(data) {
-        data.Date = formatDate(new Date(data.Date));
+        data['Date'] = formatDate(new Date(data['Date']));
         return data;
       })
       .attr("class", "line")
