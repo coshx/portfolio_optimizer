@@ -24,7 +24,7 @@ export class LineGraphComponent implements OnChanges {
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
 
-    let formatDate = d3.time.format('%Y-%m-%d');
+    let formatDate = d3.time.format('%Y-%m-%dT%H:%M:%S.%LZ');
 
     let x = d3.time.scale()
       .range([0, width]);
@@ -41,7 +41,7 @@ export class LineGraphComponent implements OnChanges {
       .orient('left');
 
     let line = d3.svg.line()
-      .x((d) => x(new Date(d['Date'])))
+      .x((d) => x(d['Date']))
       .y((d) => y(d['Optimized']));
 
     let svg = d3.select('div.line-graph').append('svg')
@@ -50,8 +50,8 @@ export class LineGraphComponent implements OnChanges {
       .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    x.domain(d3.extent(optimized, function(d) { return new Date(d['Date']); }));
-    y.domain(d3.extent(optimized, function(d) { return d['Optimized']; }));
+    x.domain(d3.extent(optimized, (d) => new Date(d['Date'])));
+    y.domain(d3.extent(optimized, (d) => d['Optimized']));
 
     svg.append('g')
         .attr('class', 'x axis')
@@ -70,15 +70,15 @@ export class LineGraphComponent implements OnChanges {
 
     svg.selectAll('.line')
       .data(optimized)
-      .enter()
-      .append('path')
+      .enter().append('path')
       .datum(function(data) {
-        data['Date'] = formatDate(new Date(data['Date']));
+        console.log(data);
+        data['Date'] = formatDate.parse(data['Date']);
+        console.log(data);
         return data;
       })
-      .attr("class", "line")
-      .attr("d", line);
-
+      .attr('class', 'line')
+      .attr('d', line);
   }
 
   removeOldChart() {
@@ -87,7 +87,7 @@ export class LineGraphComponent implements OnChanges {
     d3.select('svg').remove();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     // Called on changes to the bindings
     // At the very beginning when the bindings are first specified, this counts as a change
     this.removeOldChart();
