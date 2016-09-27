@@ -48,6 +48,7 @@ export class OptimizerComponent implements OnInit {
   }
 
   submitData(value: Object) {
+    console.log("submitData called");
     // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);
@@ -55,6 +56,7 @@ export class OptimizerComponent implements OnInit {
   }
 
   subscribeToResponse() {
+    console.log("subscribeToResponse called");
     // Subscribe to the stream that will have HTTP Post responses
     this.optimizerDataService.responseSubject.subscribe(
       (response) => {

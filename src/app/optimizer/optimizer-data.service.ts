@@ -40,8 +40,6 @@ export class OptimizerDataService {
       .subscribe(
         data => {
           let response = data.json();
-          response.performance.Optimized = JSON.parse(response.performance.Optimized);
-          response.performance.SPY = JSON.parse(response.performance.SPY);
           this.responseSubject.next(response);
         },
         err => this.responseSubject.error(err)
