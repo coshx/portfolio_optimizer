@@ -128,23 +128,9 @@ def optimize_portfolio(prices, prices_SPY):
     return {'optimal_allocations': {k: v for (k, v) in zip(symbols, allocs)},
             'sharpe_ratio': get_sharpe_ratio(port_val, SPY_val),
             'cumulative_returns': get_cumulative_returns(port_val),
-            'performance': df_to_d3(compare_SPY)}
+            'performance': compare_SPY.reset_index().to_json(date_format='iso',
+                                                             orient='records')}
 
-def df_to_d3(df):
-    """Turn each column of a dataframe into a d3-ready JSON object.
-
-    Args:
-        df (dataframe): the dataframe whose columns to transform
-
-    Returns:
-        data (dict): a dict with df's column names as keys and
-            df's JSONified rows as values
-    """
-    data = {}
-    for col in df:
-        data[col] = df[col].reset_index().to_json(date_format='iso',
-                                                  orient='records')
-    return data
 
 def main():
     """Driver function."""
