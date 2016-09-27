@@ -16,15 +16,11 @@ export class LineGraphComponent implements OnChanges {
   createChart() {
     let optimized = this.performance['Optimized'];
     let SPY = this.performance['SPY'];
-    console.log(optimized);
-    console.log(SPY);
 
     let container = document.getElementsByClassName('line-graph')[0];
     let margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = container.clientWidth - margin.left - margin.right,
     height = 384 - margin.top - margin.bottom;
-
-    let formatDate = d3.time.format('%Y-%m-%dT%H:%M:%S.%LZ');
 
     let x = d3.time.scale()
       .range([0, width]);
@@ -41,7 +37,7 @@ export class LineGraphComponent implements OnChanges {
       .orient('left');
 
     let line = d3.svg.line()
-      .x((d) => x(d['Date']))
+      .x((d) => x(new Date(d['Date'])))
       .y((d) => y(d['Optimized']));
 
     let svg = d3.select('div.line-graph').append('svg')
@@ -71,25 +67,17 @@ export class LineGraphComponent implements OnChanges {
     svg.selectAll('.line')
       .data(optimized)
       .enter().append('path')
-      .datum(function(data) {
-        console.log(data);
-        data['Date'] = formatDate.parse(data['Date']);
-        console.log(data);
-        return data;
-      })
-      .attr('class', 'line')
-      .attr('d', line);
+      .datum(optimized)
+        .attr('class', 'line')
+        .attr('d', line);
   }
 
   removeOldChart() {
-    // If svg element exists, remove it
-    // If it doesn't, nothing happens
-    d3.select('svg').remove();
+    d3.select('div.line-graph svg').remove();
   }
 
   ngOnChanges() {
-    // Called on changes to the bindings
-    // At the very beginning when the bindings are first specified, this counts as a change
+    // Called on changes to the bindings, including initialization.
     this.removeOldChart();
     this.createChart();
   }

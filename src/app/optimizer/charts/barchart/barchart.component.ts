@@ -75,14 +75,11 @@ export class BarchartComponent implements OnChanges {
   }
 
   removeOldChart() {
-    // If svg element exists, remove it
-    // If it doesn't, nothing happens
-    d3.select('svg').remove();
+    d3.select('div.barchart svg').remove();
   }
 
-  ngOnChanges(){
-    // Called on changes to the bindings
-    // At the very beginning when the bindings are first specified, this counts as a change
+  ngOnChanges() {
+    // Called on changes to the bindings, including initialization.
     this.removeOldChart();
     this.createChart();
   }
