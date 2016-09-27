@@ -13,7 +13,7 @@ export class OptimizerComponent implements OnInit {
   initialInvestment: number;
   cumulativeReturns: number;
   optimalAllocs: Object;
-  performance: Object;
+  performance: string;
   sharpeRatio: number;
 
   query: Object;
@@ -28,9 +28,6 @@ export class OptimizerComponent implements OnInit {
   }
 
   parseResponse(response: Object) {
-    console.log("parseResponse called");
-    console.log(response);
-
     let stocks = [];
     let allocations = [];
     for (let key in response['optimal_allocations']) {
@@ -48,7 +45,6 @@ export class OptimizerComponent implements OnInit {
   }
 
   submitData(value: Object) {
-    console.log("submitData called");
     // Triggered by the submition of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);
@@ -56,7 +52,6 @@ export class OptimizerComponent implements OnInit {
   }
 
   subscribeToResponse() {
-    console.log("subscribeToResponse called");
     // Subscribe to the stream that will have HTTP Post responses
     this.optimizerDataService.responseSubject.subscribe(
       (response) => {
