@@ -1,0 +1,127 @@
+/* You can add global styles to this file, and also import other style files */
+@import "_variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700");
+
+//colors
+$base-color: #6366FF;
+$highlight-color: #3D3FB8;
+$remove-color: #9013FE;
+$light-purple: rgba( $base-color, .2 );
+
+//font sizes
+$base-font-size: 16px;
+$sharpe-ratio-font-size: 48px;
+$section-font-size: 28px;
+$small-font-size: 14px;
+
+h1 {font-family: georgia; font-size:52px; color:black; margin:50px 0 30px 0;}
+strong {font-weight:700; -webkit-font-smoothing: antialiased;}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $base-color;
+  font-size: $base-font-size;
+
+  background: white;
+  margin: 5%;
+}
+
+//Typography
+.sharpe-ratio {
+  font-size: $sharpe-ratio-font-size;
+  font-weight: 700;
+  span {color: $highlight-color;}
+}
+
+.section-name {
+  font-size: $section-font-size;
+  font-weight: 300;
+}
+
+p {
+  line-height: 20px;
+}
+
+.training-time {
+  font-size: $small-font-size;
+  color: $highlight-color;
+  span {
+    color: $base-color;
+    &:hover {text-decoration: underline;}
+  }
+}
+
+//HR
+hr {
+  margin: 30px 0px;
+  border: 0;
+  height: 1px;
+  background: $light-purple;
+}
+
+hr.two {
+  height: 2px;
+  background: $light-purple;
+}
+
+
+//Input Elements
+.stock-ticker {color:$highlight-color;}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid $light-purple;
+  border-radius: 3px;
+  box-sizing: border-box;
+
+  font-size: $base-font-size;
+  color: $highlight-color;
+
+  &::-webkit-input-placeholder {
+    color: rgba($base-color, .5);
+  }
+
+  &:focus {
+    outline: none;
+    border:2px solid $base-color;
+    background: rgba($base-color, .05);
+    &::-webkit-input-placeholder {color:transparent;}
+  }
+}
+
+input[type=submit] {
+  width: 100%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  background-color: $base-color;
+  font-size: $base-font-size;
+  color: white;
+}
+
+input[type=submit]:hover {
+  background-color: rgba($highlight-color, .9);
+}
+
+div.input-backgrounds {
+  background: $light-purple;
+  padding: 2%;
+}
+
+section.modal-background {
+  height: 300px;
+  width: 100%;
+
+  /* gradient: */
+  opacity: 0.9;
+  background-image: -webkit-linear-gradient(44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: -moz-linear-gradient(44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: -o-linear-gradient(44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: linear-gradient(134deg, #3023AE 0%, #C86DD7 100%);
+}
