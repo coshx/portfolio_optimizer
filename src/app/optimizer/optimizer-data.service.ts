@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {Subject} from 'rxjs/Rx';
+import {BehaviorSubject, Subject} from 'rxjs/Rx';
 import {environment} from '../';
 
 @Injectable()
 export class OptimizerDataService {
 
-  responseSubject: Subject<Object> = new Subject();
+  private responseSource = new BehaviorSubject<Object>(0);
+  response$ = this.responseSource.asObservable();
   formDataSubject: Subject<Object> = new Subject();
 
-  resetResponseSubject() {
+  resetResponseSource() {
     //kinda hacky
-    this.responseSubject = new Subject();
+    this.responseSource = new BehaviorSubject<Object>(0);
   }
 
   constructor(private http: Http) {
@@ -40,9 +41,9 @@ export class OptimizerDataService {
       .subscribe(
         data => {
           let response = data.json();
-          this.responseSubject.next(response);
+          this.responseSource.next(response);
         },
-        err => this.responseSubject.error(err)
+        err => this.responseSource.error(err)
       );
   }
 }

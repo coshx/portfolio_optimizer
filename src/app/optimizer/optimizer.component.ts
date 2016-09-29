@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
 
 import {OptimizerDataService} from './optimizer-data.service';
 
@@ -8,7 +9,9 @@ import {OptimizerDataService} from './optimizer-data.service';
   styleUrls: ['optimizer.component.css'],
   providers: [OptimizerDataService]
 })
-export class OptimizerComponent implements OnInit {
+export class OptimizerComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
+
   trailingDecimals: number = 4;
   initialInvestment: number;
   cumulativeReturns: number;
@@ -24,7 +27,7 @@ export class OptimizerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscribeToResponse();
+    this.subscription = this.subscribeToResponse();
   }
 
   parseResponse(response: Object) {
@@ -51,9 +54,9 @@ export class OptimizerComponent implements OnInit {
     this.loading++;
   }
 
-  subscribeToResponse() {
+  subscribeToResponse(): Subscription {
     // Subscribe to the stream that will have HTTP Post responses
-    this.optimizerDataService.responseSubject.subscribe(
+    return this.optimizerDataService.response$.subscribe(
       (response) => {
         // next value
         this.parseResponse(response);
@@ -64,11 +67,15 @@ export class OptimizerComponent implements OnInit {
         this.loading--;
         // We got an error, so this subject will be terminated
         // But we still want to get successful HTTP responses, so let's make a new subject and subscribe to it
-        this.optimizerDataService.resetResponseSubject();
+        this.optimizerDataService.resetResponseSource();
         this.subscribeToResponse();
       },
       () => {
         console.log('Response stream completed');
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
