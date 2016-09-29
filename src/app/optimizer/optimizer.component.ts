@@ -45,7 +45,7 @@ export class OptimizerComponent implements OnInit {
   }
 
   submitData(value: Object) {
-    // Triggered by the submition of the button in the input component
+    // Triggered by the submission of the button in the input component
     this.query = value;
     this.optimizerDataService.formDataSubject.next(value);
     this.loading++;
