@@ -1,44 +1,42 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { TopbarStatusService } from './topbar-status.service';
 
-import { OptimizerDataService } from './optimizer/optimizer-data.service';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'stocks-app',
   templateUrl: 'stocks.component.html',
-  styleUrls: ['stocks.component.css'],
-  providers: [OptimizerDataService]
+  styleUrls: ['stocks.component.scss'],
+  providers: [TopbarStatusService]
 })
 
 export class StocksAppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  constructor(private optimizerDataService: OptimizerDataService) {}
+  navbarStatus: string;
 
-  navbarStatus = '';
+  constructor(private topbarStatusService: TopbarStatusService) {}
 
   ngOnInit() {
-    this.subscription = this.subscribeToResponse();
+    this.subscription = this.subscribeToStatus();
   }
 
-  subscribeToResponse(): Subscription {
-    return this.optimizerDataService.status$.subscribe(
-      (response) => {
-        console.log('receiving response in stocks.component');
-        console.log('response', response);
-        let startDate = response['start'];
-        let endDate = response['end'];
-        this.navbarStatus = 'Displaying data from ' + startDate + ' to ' + endDate;
+  subscribeToStatus(): Subscription {
+    return this.topbarStatusService.status$.subscribe(
+      (status) => {
+        if (Object.getOwnPropertyNames(status).length > 0) {
+          let startDate = this.formatDate(status['start']);
+          let endDate = this.formatDate(status['end']);
+          this.navbarStatus = 'Displaying data from ' + startDate + ' to ' + endDate;
+        }
       },
-      (err) => {
-        console.log('Response stream error: ' + err);
-        // We got an error, so this subject will be terminated
-        // But we still want to get successful HTTP responses, so let's make a new subject and subscribe to it
-        this.optimizerDataService.resetResponseSource();
-        this.subscribeToResponse();
-      },
-      () => {
-        console.log('Response stream completed');
-      });
+      (err) => { console.log('Response stream error: ' + err); },
+      () => { console.log('Response stream completed'); });
+  }
+
+  formatDate(date: string) {
+    let dateFormat = d3.time.format('%b %d %Y');
+    return dateFormat(new Date(date));
   }
 
   ngOnDestroy() {

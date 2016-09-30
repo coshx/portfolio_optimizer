@@ -2,20 +2,16 @@
 @import "_variables.scss";
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700");
 
-//colors
-$base-color: #6366FF;
-$highlight-color: #3D3FB8;
-$remove-color: #9013FE;
-$light-purple: rgba( $base-color, .2 );
-
-//font sizes
-$base-font-size: 16px;
-$sharpe-ratio-font-size: 48px;
-$section-font-size: 28px;
-$small-font-size: 14px;
-
-h1 {font-family: georgia; font-size:52px; color:black; margin:50px 0 30px 0;}
-strong {font-weight:700; -webkit-font-smoothing: antialiased;}
+h1 {
+  font-family: georgia;
+  font-size:52px;
+  color:black;
+  margin:50px 0 30px 0;
+}
+strong {
+  font-weight:700;
+  -webkit-font-smoothing: antialiased;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -30,7 +26,9 @@ body {
 .sharpe-ratio {
   font-size: $sharpe-ratio-font-size;
   font-weight: 700;
-  span {color: $highlight-color;}
+  span {
+    color: $highlight-color;
+  }
 }
 
 .section-name {
@@ -66,7 +64,9 @@ hr.two {
 
 
 //Input Elements
-.stock-ticker {color:$highlight-color;}
+.stock-ticker {
+  color:$highlight-color;
+}
 
 input[type=text], select {
   width: 100%;

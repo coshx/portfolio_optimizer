@@ -1,35 +1,29 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {BehaviorSubject, Subject} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 import {environment} from '../';
+
+import {TopbarStatusService} from '../topbar-status.service'
 
 @Injectable()
 export class OptimizerDataService {
 
-  private statusSource = new BehaviorSubject<Object>({});
   private responseSource = new Subject<Object>();
+  response$ = this.responseSource.asObservable();
 
   formDataSubject: Subject<Object> = new Subject();
-  status$ = this.statusSource.asObservable();
-  response$ = this.responseSource.asObservable();
 
   resetResponseSource() {
     //kinda hacky
     this.responseSource = new Subject<Object>();
   }
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private topbarStatusService: TopbarStatusService) {
     this.formDataSubject.subscribe(
-      (query) => {
-        //next value
-        this.optimizePortfolio(query);
-      },
-      (err) => {
-        console.log('Form data stream error: ' + err);
-      },
-      () => {
-        console.log('Form data stream completed');
-      });
+      (query) => { this.optimizePortfolio(query); },
+      (err) => { console.log('Form data stream error: ' + err); },
+      () => { console.log('Form data stream completed'); });
   }
 
   optimizePortfolio(formData: Object) {
@@ -45,7 +39,7 @@ export class OptimizerDataService {
         data => {
           let response = data.json();
           this.responseSource.next(response);
-          this.statusSource.next(response['period']);
+          this.topbarStatusService.setStatus(response['period']);
         },
         err => this.responseSource.error(err)
       );

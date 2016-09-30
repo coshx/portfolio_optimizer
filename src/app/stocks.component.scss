@@ -1,0 +1,13 @@
+.navbar {
+  display: flex;
+}
+.navbar-logo {
+  flex: 1;
+}
+.navbar-status {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  justify-content: center;
+  text-align: center;
+}
