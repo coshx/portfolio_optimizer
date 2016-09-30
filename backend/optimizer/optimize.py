@@ -129,7 +129,9 @@ def optimize_portfolio(prices, prices_SPY):
             'sharpe_ratio': get_sharpe_ratio(port_val, SPY_val),
             'cumulative_returns': get_cumulative_returns(port_val),
             'performance': compare_SPY.reset_index().to_json(date_format='iso',
-                                                             orient='records')}
+                                                             orient='records'),
+            'period': {'start': str(compare_SPY.index[0]),
+                       'end': str(compare_SPY.index[-1])}}
 
 
 def main():

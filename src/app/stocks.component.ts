@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+
 import { OptimizerDataService } from './optimizer/optimizer-data.service';
 
 @Component({
@@ -8,23 +10,24 @@ import { OptimizerDataService } from './optimizer/optimizer-data.service';
   providers: [OptimizerDataService]
 })
 
-export class StocksAppComponent implements OnInit {
+export class StocksAppComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
   constructor(private optimizerDataService: OptimizerDataService) {}
 
   navbarStatus = '';
 
   ngOnInit() {
-    this.subscribeToResponse();
+    this.subscription = this.subscribeToResponse();
   }
 
-  subscribeToResponse() {
-    this.optimizerDataService.response$.subscribe(
+  subscribeToResponse(): Subscription {
+    return this.optimizerDataService.status$.subscribe(
       (response) => {
-        // next value
         console.log('receiving response in stocks.component');
-        let startDate = response['start_date'];
-        let endDate = response['end_date'];
-        this.navbarStatus = 'Displaying data from' + startDate + 'to' + endDate;
+        console.log('response', response);
+        let startDate = response['start'];
+        let endDate = response['end'];
+        this.navbarStatus = 'Displaying data from ' + startDate + ' to ' + endDate;
       },
       (err) => {
         console.log('Response stream error: ' + err);
@@ -36,6 +39,10 @@ export class StocksAppComponent implements OnInit {
       () => {
         console.log('Response stream completed');
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

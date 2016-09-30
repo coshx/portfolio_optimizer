@@ -55,10 +55,8 @@ export class OptimizerComponent implements OnInit, OnDestroy {
   }
 
   subscribeToResponse(): Subscription {
-    // Subscribe to the stream that will have HTTP Post responses
     return this.optimizerDataService.response$.subscribe(
       (response) => {
-        // next value
         this.parseResponse(response);
         this.loading--;
       },

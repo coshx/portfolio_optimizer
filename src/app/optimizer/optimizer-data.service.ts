@@ -6,13 +6,16 @@ import {environment} from '../';
 @Injectable()
 export class OptimizerDataService {
 
-  private responseSource = new BehaviorSubject<Object>(0);
-  response$ = this.responseSource.asObservable();
+  private statusSource = new BehaviorSubject<Object>({});
+  private responseSource = new Subject<Object>();
+
   formDataSubject: Subject<Object> = new Subject();
+  status$ = this.statusSource.asObservable();
+  response$ = this.responseSource.asObservable();
 
   resetResponseSource() {
     //kinda hacky
-    this.responseSource = new BehaviorSubject<Object>(0);
+    this.responseSource = new Subject<Object>();
   }
 
   constructor(private http: Http) {
@@ -42,6 +45,7 @@ export class OptimizerDataService {
         data => {
           let response = data.json();
           this.responseSource.next(response);
+          this.statusSource.next(response['period']);
         },
         err => this.responseSource.error(err)
       );
